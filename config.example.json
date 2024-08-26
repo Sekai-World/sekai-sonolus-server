@@ -1,0 +1,83 @@
+{
+    "port": 8080,
+    "verbose": true,
+    "updateInterval": 600000,
+    "sonolus": {
+        "prefix": "sekai-best",
+        "basePath": "/",
+        "address": "https://my-domain.com",
+        "fallbackLocale": "ja",
+        "bannerPath": "",
+        "packPath": "",
+        "post": {
+            "info": {
+                "author": {
+                    "en": "Burrito"
+                },
+                "description": {
+                    "en": "Official Sekai Chart server\n\nAll data comes from Sekai Viewer:\nhttps://sekai.best\n\nGitHub Repository:\nhttps://github.com/Sekai-World/sekai-sonolus-server"
+                }
+            }
+        },
+        "engine": {
+            "skin": "pixel",
+            "background": "darkblue",
+            "effect": "8bit",
+            "particle": "pixel"
+        }
+    },
+    "sonolusShare": {
+        "mode": "redirect",
+        "root": "my-domain.com"
+    },
+    "clients": {
+        "ja": {
+            "master": {
+                "baseUrl": "https://sekai-world.github.io/sekai-master-db-diff",
+                "timeout": 30000
+            },
+            "asset": {
+                "baseUrl": "https://storage.sekai.best/sekai-jp-assets",
+                "timeout": 30000
+            }
+        },
+        "en": {
+            "master": {
+                "baseUrl": "https://sekai-world.github.io/sekai-master-db-en-diff",
+                "timeout": 30000
+            },
+            "asset": {
+                "baseUrl": "https://storage.sekai.best/sekai-en-assets",
+                "timeout": 30000
+            }
+        },
+        "ko": {
+            "master": {
+                "baseUrl": "https://sekai-world.github.io/sekai-master-db-kr-diff",
+                "timeout": 30000
+            },
+            "asset": {
+                "baseUrl": "https://storage.sekai.best/sekai-kr-assets",
+                "timeout": 30000
+            }
+        },
+        "zht": {
+            "master": {
+                "baseUrl": "https://sekai-world.github.io/sekai-master-db-tc-diff",
+                "timeout": 30000
+            },
+            "asset": {
+                "baseUrl": "https://storage.sekai.best/sekai-tc-assets",
+                "timeout": 30000
+            }
+        },
+        "i18n": {
+            "baseUrl": "https://i18n-json.sekai.best",
+            "timeout": 30000
+        },
+        "whitelist": {
+            "enabled": true,
+            "threadCount": 5
+        }
+    }
+}
