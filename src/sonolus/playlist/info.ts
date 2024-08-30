@@ -6,6 +6,7 @@ import { playlistSearches } from './search.js'
 
 export const installPlaylistInfo = () => {
     sonolus.playlist.infoHandler = ({ options }) => {
+        const filteredPlaylists = hideSpoilers(options.spoilers, sonolus.playlist.items)
         return {
             searches: playlistSearches,
             sections: [
@@ -13,12 +14,12 @@ export const installPlaylistInfo = () => {
                     title: { en: Text.Random },
                     icon: Icon.Shuffle,
                     itemType: 'playlist',
-                    items: randomize(hideSpoilers(options.spoilers, sonolus.playlist.items), 5),
+                    items: randomize(filteredPlaylists, 5),
                 },
                 {
                     title: { en: Text.Newest },
                     itemType: 'playlist',
-                    items: hideSpoilers(options.spoilers, sonolus.playlist.items).slice(0, 5),
+                    items: filteredPlaylists.slice(0, 5),
                 },
             ],
             banner: sonolus.banner,
