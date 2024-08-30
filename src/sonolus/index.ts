@@ -3,7 +3,7 @@ import { config } from '../config.js'
 import { Repository } from '../repository/index.js'
 import { installBackground, updateBackground } from './background/index.js'
 import { backgroundSearches } from './background/search.js'
-import { serverConfiguration } from './configuration.js'
+import { serverOptions } from './configuration.js'
 import { installEngine } from './engine/index.js'
 import { installInfo } from './info/index.js'
 import { installLevel, updateLevel } from './level/index.js'
@@ -27,7 +27,7 @@ export const sonolus = new Sonolus({
         searches: backgroundSearches,
     },
     configuration: {
-        options: serverConfiguration,
+        options: serverOptions,
     },
 })
 

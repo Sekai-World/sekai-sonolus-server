@@ -1,6 +1,6 @@
 import { ServerOptionsModel } from '@sonolus/express'
 
-export const serverConfiguration = {
+export const serverOptions = {
     spoilers: {
         type: 'toggle',
         name: {
