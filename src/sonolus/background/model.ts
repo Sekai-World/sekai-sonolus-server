@@ -7,7 +7,7 @@ declare module '@sonolus/express' {
             attributeIndex: number
             imageIndex: number
             id: number
-            releaseAt: number
+            publishedAt: number
         }
     }
 }

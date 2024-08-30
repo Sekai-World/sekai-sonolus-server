@@ -1,13 +1,20 @@
 import { filterLevels, paginateItems } from '@sonolus/express'
 import { sonolus } from '../index.js'
 import { randomizeItems, toIndexes } from '../utils/list.js'
+import { hideSpoilers } from '../utils/spoiler.js'
 import { levelSearches } from './search.js'
 
 export const installLevelList = () => {
-    sonolus.level.listHandler = ({ search: { type, options }, page }) => {
+    sonolus.level.listHandler = ({ search: { type, options }, page, options: serverOptions }) => {
         if (type === 'quick')
             return {
-                ...paginateItems(filterLevels(sonolus.level.items, options.keywords), page),
+                ...paginateItems(
+                    filterLevels(
+                        hideSpoilers(serverOptions.spoilers, sonolus.level.items),
+                        options.keywords,
+                    ),
+                    page,
+                ),
                 searches: levelSearches,
             }
 
@@ -16,7 +23,7 @@ export const installLevelList = () => {
         const difficultyIndexes = toIndexes(options.difficulties)
 
         const items = filterLevels(
-            sonolus.level.items.filter(
+            hideSpoilers(serverOptions.spoilers, sonolus.level.items).filter(
                 ({ rating, meta }) =>
                     (!meta.characterIndexes.length ||
                         meta.characterIndexes.some((characterIndex) =>

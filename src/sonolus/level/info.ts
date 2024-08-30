@@ -2,16 +2,17 @@ import { Icon, Text } from '@sonolus/core'
 import { LevelItemModel } from '@sonolus/express'
 import { randomize } from '../../utils/math.js'
 import { sonolus } from '../index.js'
+import { hideSpoilers } from '../utils/spoiler.js'
 import { levelSearches } from './search.js'
 
 export const installLevelInfo = () => {
-    sonolus.level.infoHandler = () => {
+    sonolus.level.infoHandler = ({ options }) => {
         const randomLevels: Record<string, LevelItemModel> = {}
 
         const newestMusicIds = new Set<number>()
         const newestLevels: LevelItemModel[] = []
 
-        for (const level of sonolus.level.items) {
+        for (const level of hideSpoilers(options.spoilers, sonolus.level.items)) {
             randomLevels[`${level.meta.musicId}-${level.meta.musicVocalId}`] ??= level
 
             if (newestLevels.length >= 5) continue

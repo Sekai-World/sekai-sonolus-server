@@ -4,13 +4,24 @@ import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
 import { randomizeItems, toIndexes } from '../utils/list.js'
+import { hideSpoilers } from '../utils/spoiler.js'
 import { playlistSearches } from './search.js'
 
 export const installPlaylistList = () => {
-    sonolus.playlist.listHandler = ({ search: { type, options }, page }) => {
+    sonolus.playlist.listHandler = ({
+        search: { type, options },
+        page,
+        options: serverOptions,
+    }) => {
         if (type === 'quick')
             return {
-                ...paginateItems(filterPlaylists(sonolus.playlist.items, options.keywords), page),
+                ...paginateItems(
+                    filterPlaylists(
+                        hideSpoilers(serverOptions.spoilers, sonolus.playlist.items),
+                        options.keywords,
+                    ),
+                    page,
+                ),
                 searches: playlistSearches,
             }
 
@@ -29,6 +40,7 @@ export const installPlaylistList = () => {
                         meta: {
                             musicVocalTypeIndexes: new Set(),
                             characterIndexes: new Set(),
+                            publishedAt: Date.now(),
                         },
                     },
                 ],
@@ -39,7 +51,7 @@ export const installPlaylistList = () => {
         const musicVocalTypeIndexes = toIndexes(options.categories)
 
         const items = filterPlaylists(
-            sonolus.playlist.items.filter(
+            hideSpoilers(serverOptions.spoilers, sonolus.playlist.items).filter(
                 ({ meta }) =>
                     (!meta.characterIndexes.size ||
                         characterIndexes.some((characterIndex) =>
@@ -50,7 +62,17 @@ export const installPlaylistList = () => {
                     ),
             ),
             options.keywords,
-        )
+        ).map((playlist) => ({
+            ...playlist,
+            levels: hideSpoilers(
+                serverOptions.spoilers,
+                playlist.levels.map((levelName) => {
+                    const level = sonolus.level.items.find((level) => level.name === levelName)
+                    if (!level) throw new Error(`Unreachable (level not found): ${levelName}`)
+                    return level
+                }),
+            ),
+        }))
 
         return {
             ...(options.random ? randomizeItems(items) : paginateItems(items, page)),

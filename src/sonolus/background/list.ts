@@ -1,16 +1,27 @@
-import { filterBackgrounds, paginateItems } from '@sonolus/express'
+import { BackgroundItemModel, filterBackgrounds, paginateItems } from '@sonolus/express'
 import { sonolus } from '../index.js'
 import { randomizeItems, toIndexes } from '../utils/list.js'
+import { hideSpoilers } from '../utils/spoiler.js'
 import { backgroundSearches } from './search.js'
 
 export const installBackgroundList = () => {
-    sonolus.background.listHandler = ({ search: { type, options }, page }) => {
+    sonolus.background.listHandler = ({
+        search: { type, options },
+        page,
+        options: serverOptions,
+    }) => {
+        const filteredBackgrounds = [
+            ...hideSpoilers(
+                serverOptions.spoilers,
+                sonolus.background.items.filter(
+                    (item): item is BackgroundItemModel & { meta: {} } => item.meta !== undefined,
+                ),
+            ),
+            ...sonolus.background.items.filter(({ meta }) => !meta),
+        ]
         if (type === 'quick')
             return {
-                ...paginateItems(
-                    filterBackgrounds(sonolus.background.items, options.keywords),
-                    page,
-                ),
+                ...paginateItems(filterBackgrounds(filteredBackgrounds, options.keywords), page),
                 searches: backgroundSearches,
             }
 
@@ -32,7 +43,7 @@ export const installBackgroundList = () => {
         const imageIndexes = toIndexes(options.images)
 
         const items = filterBackgrounds(
-            sonolus.background.items.filter(
+            filteredBackgrounds.filter(
                 ({ meta }) =>
                     meta &&
                     characterIndexes.includes(meta.characterIndex) &&

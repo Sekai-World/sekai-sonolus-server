@@ -19,6 +19,10 @@ export const updatePlaylistItems = () => {
             for (const characterIndex of level.meta.characterIndexes) {
                 playlist.meta.characterIndexes.add(characterIndex)
             }
+
+            if (level.meta.publishedAt > playlist.meta.publishedAt) {
+                playlist.meta.publishedAt = level.meta.publishedAt
+            }
         } else {
             playlists.set(level.meta.musicId, {
                 name: `${config.sonolus.prefix}-${level.meta.musicId}`,
@@ -32,6 +36,7 @@ export const updatePlaylistItems = () => {
                 meta: {
                     musicVocalTypeIndexes: new Set([level.meta.musicVocalTypeIndex]),
                     characterIndexes: new Set(level.meta.characterIndexes),
+                    publishedAt: level.meta.publishedAt,
                 },
             })
         }
