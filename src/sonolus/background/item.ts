@@ -60,7 +60,7 @@ export const updateBackgroundItems = (repository: Repository) => {
             rarityIndex: cardRarity.index,
             attributeIndex: attribute.index,
             id: card.id,
-            releaseAt: card.releaseAt,
+            publishedAt: card.releaseAt,
         }
 
         if (cardRarity.hasTraining) {
@@ -96,6 +96,6 @@ export const updateBackgroundItems = (repository: Repository) => {
 
     sonolus.background.items = [
         ...initialBackgrounds,
-        ...backgrounds.sort((a, b) => b.meta.releaseAt - a.meta.releaseAt),
+        ...backgrounds.sort((a, b) => b.meta.publishedAt - a.meta.publishedAt),
     ]
 }

@@ -4,6 +4,7 @@ declare module '@sonolus/express' {
         meta: {
             musicVocalTypeIndexes: Set<number>
             characterIndexes: Set<number>
+            publishedAt: number
         }
     }
 }
