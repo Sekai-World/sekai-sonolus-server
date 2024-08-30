@@ -13,15 +13,10 @@ export const installPlaylistList = () => {
         page,
         options: serverOptions,
     }) => {
+        const filteredPlaylists = hideSpoilers(serverOptions.spoilers, sonolus.playlist.items)
         if (type === 'quick')
             return {
-                ...paginateItems(
-                    filterPlaylists(
-                        hideSpoilers(serverOptions.spoilers, sonolus.playlist.items),
-                        options.keywords,
-                    ),
-                    page,
-                ),
+                ...paginateItems(filterPlaylists(filteredPlaylists, options.keywords), page),
                 searches: playlistSearches,
             }
 
@@ -51,7 +46,7 @@ export const installPlaylistList = () => {
         const musicVocalTypeIndexes = toIndexes(options.categories)
 
         const items = filterPlaylists(
-            hideSpoilers(serverOptions.spoilers, sonolus.playlist.items).filter(
+            filteredPlaylists.filter(
                 ({ meta }) =>
                     (!meta.characterIndexes.size ||
                         characterIndexes.some((characterIndex) =>
