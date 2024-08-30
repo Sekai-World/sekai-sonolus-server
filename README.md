@@ -88,7 +88,7 @@ Examples: `./path/to/pack`.
 
 Info post author.
 
-### `sonolus.post.info.`
+### `sonolus.post.info.description`
 
 Info post description.
 
