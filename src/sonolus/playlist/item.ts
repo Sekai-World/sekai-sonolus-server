@@ -20,7 +20,7 @@ export const updatePlaylistItems = () => {
                 playlist.meta.characterIndexes.add(characterIndex)
             }
 
-            if (level.meta.publishedAt > playlist.meta.publishedAt) {
+            if (level.meta.publishedAt < playlist.meta.publishedAt) {
                 playlist.meta.publishedAt = level.meta.publishedAt
             }
         } else {
