@@ -22,7 +22,7 @@ export const fetchWhitelist = async (targets: Target[]) => {
     )
 
     return {
-        has: (url: string) => whitelist.has(url),
+        has: (url: string) => whitelist.get(url) ?? false,
     }
 }
 
