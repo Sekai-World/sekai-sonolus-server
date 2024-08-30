@@ -68,7 +68,8 @@ export const installPlaylistList = () => {
                 serverOptions.spoilers,
                 playlist.levels.map((levelName) => {
                     const level = sonolus.level.items.find((level) => level.name === levelName)
-                    if (!level) throw new Error(`Unreachable (level not found): ${levelName}`)
+                    if (!level)
+                        throw new Error(`Unreachable (level not found): ${String(levelName)}`)
                     return level
                 }),
             ),

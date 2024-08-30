@@ -10,7 +10,7 @@ export const installBackgroundInfo = () => {
         const cardBackgrounds = hideSpoilers(
             options.spoilers,
             sonolus.background.items.filter(
-                (item): item is BackgroundItemModel & { meta: {} } => item.meta !== undefined,
+                (item): item is BackgroundItemModel & { meta: object } => item.meta !== undefined,
             ),
         )
         const otherBackgrounds = sonolus.background.items.filter(({ meta }) => !meta)

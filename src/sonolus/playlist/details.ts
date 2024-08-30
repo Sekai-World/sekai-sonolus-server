@@ -5,9 +5,10 @@ import { config } from '../../config.js'
 import { randomize } from '../../utils/math.js'
 import { sonolus } from '../index.js'
 import { nonEmpty } from '../utils/section.js'
+import { hideSpoilers } from '../utils/spoiler.js'
 
 export const installPlaylistDetails = () => {
-    sonolus.playlist.detailsHandler = ({ itemName }) => {
+    sonolus.playlist.detailsHandler = ({ itemName, options }) => {
         if (itemName.startsWith(`${config.sonolus.prefix}-random-`)) {
             const [, , , min, max] = itemName.split('-')
             const minRating = +(min ?? '') || 0
@@ -22,7 +23,7 @@ export const installPlaylistDetails = () => {
                     author: databaseEngineItem.subtitle,
                     tags: [{ title: { en: Text.Random } }],
                     levels: randomize(
-                        sonolus.level.items
+                        hideSpoilers(options.spoilers, sonolus.level.items)
                             .filter(({ rating }) => rating >= minRating && rating <= maxRating)
                             .map(({ name }) => name),
                         20,
@@ -30,6 +31,7 @@ export const installPlaylistDetails = () => {
                     meta: {
                         musicVocalTypeIndexes: new Set(),
                         characterIndexes: new Set(),
+                        publishedAt: Date.now(),
                     },
                 },
                 actions: {},

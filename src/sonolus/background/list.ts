@@ -14,7 +14,8 @@ export const installBackgroundList = () => {
             ...hideSpoilers(
                 serverOptions.spoilers,
                 sonolus.background.items.filter(
-                    (item): item is BackgroundItemModel & { meta: {} } => item.meta !== undefined,
+                    (item): item is BackgroundItemModel & { meta: object } =>
+                        item.meta !== undefined,
                 ),
             ),
             ...sonolus.background.items.filter(({ meta }) => !meta),
