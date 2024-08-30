@@ -5,7 +5,7 @@ import { config } from '../../config.js'
 import { randomize } from '../../utils/math.js'
 import { sonolus } from '../index.js'
 import { nonEmpty } from '../utils/section.js'
-import { hideSpoilers } from '../utils/spoiler.js'
+import { hideSpoilers, hideSpoilersFromPlaylist } from '../utils/spoiler.js'
 
 export const installPlaylistDetails = () => {
     sonolus.playlist.detailsHandler = ({ itemName, options }) => {
@@ -45,23 +45,7 @@ export const installPlaylistDetails = () => {
         if (!item) return 404
 
         return {
-            item: {
-                ...item,
-                levels: hideSpoilers(
-                    options.spoilers,
-                    item.levels.map((levelNameOrItem) => {
-                        if (typeof levelNameOrItem === 'object') return levelNameOrItem
-                        const level = sonolus.level.items.find(
-                            (level) => level.name === levelNameOrItem,
-                        )
-                        if (!level)
-                            throw new Error(
-                                `Unreachable (level not found): ${String(levelNameOrItem)}`,
-                            )
-                        return level
-                    }),
-                ),
-            },
+            item: hideSpoilersFromPlaylist(options.spoilers, item),
             description: item.description,
             actions: {},
             hasCommunity: false,

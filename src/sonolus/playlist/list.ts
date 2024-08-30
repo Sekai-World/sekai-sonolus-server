@@ -4,7 +4,7 @@ import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
 import { randomizeItems, toIndexes } from '../utils/list.js'
-import { hideSpoilers } from '../utils/spoiler.js'
+import { hideSpoilersFromPlaylists } from '../utils/spoiler.js'
 import { playlistSearches } from './search.js'
 
 export const installPlaylistList = () => {
@@ -13,7 +13,10 @@ export const installPlaylistList = () => {
         page,
         options: serverOptions,
     }) => {
-        const filteredPlaylists = hideSpoilers(serverOptions.spoilers, sonolus.playlist.items)
+        const filteredPlaylists = hideSpoilersFromPlaylists(
+            serverOptions.spoilers,
+            sonolus.playlist.items,
+        )
         if (type === 'quick')
             return {
                 ...paginateItems(filterPlaylists(filteredPlaylists, options.keywords), page),
@@ -57,22 +60,7 @@ export const installPlaylistList = () => {
                     ),
             ),
             options.keywords,
-        ).map((playlist) => ({
-            ...playlist,
-            levels: hideSpoilers(
-                serverOptions.spoilers,
-                playlist.levels.map((levelNameOrItem) => {
-                    if (typeof levelNameOrItem === 'object') return levelNameOrItem
-                    const level = sonolus.level.items.find(
-                        (level) => level.name === levelNameOrItem,
-                    )
-                    if (!level)
-                        throw new Error(`Unreachable (level not found): ${String(levelNameOrItem)}`)
-                    return level
-                }),
-            ),
-        }))
-
+        )
         return {
             ...(options.random ? randomizeItems(items) : paginateItems(items, page)),
             searches: playlistSearches,
