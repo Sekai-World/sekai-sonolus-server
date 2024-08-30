@@ -55,11 +55,13 @@ export const installPlaylistDetails = () => {
                             (level) => level.name === levelNameOrItem,
                         )
                         if (!level)
-                            throw new Error(`Unreachable (level not found): ${String(levelNameOrItem)}`)
+                            throw new Error(
+                                `Unreachable (level not found): ${String(levelNameOrItem)}`,
+                            )
                         return level
                     }),
                 ),
-            }
+            },
             description: item.description,
             actions: {},
             hasCommunity: false,
