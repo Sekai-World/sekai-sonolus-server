@@ -5,5 +5,5 @@ export const hideSpoilers = <T extends { meta: { publishedAt: number } }>(
     if (passThrough) {
         return items
     }
-    return items.filter((level) => level.meta.publishedAt <= Date.now())
+    return items.filter((item) => item.meta.publishedAt <= Date.now())
 }
