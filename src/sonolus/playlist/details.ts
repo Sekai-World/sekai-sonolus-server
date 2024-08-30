@@ -8,7 +8,7 @@ import { nonEmpty } from '../utils/section.js'
 import { hideSpoilers, hideSpoilersFromPlaylist } from '../utils/spoiler.js'
 
 export const installPlaylistDetails = () => {
-    sonolus.playlist.detailsHandler = ({ itemName, options }) => {
+    sonolus.playlist.detailsHandler = ({ itemName, options: { spoilers } }) => {
         if (itemName.startsWith(`${config.sonolus.prefix}-random-`)) {
             const [, , , min, max] = itemName.split('-')
             const minRating = +(min ?? '') || 0
@@ -23,7 +23,7 @@ export const installPlaylistDetails = () => {
                     author: databaseEngineItem.subtitle,
                     tags: [{ title: { en: Text.Random } }],
                     levels: randomize(
-                        hideSpoilers(options.spoilers, sonolus.level.items)
+                        hideSpoilers(spoilers[0], sonolus.level.items)
                             .filter(({ rating }) => rating >= minRating && rating <= maxRating)
                             .map(({ name }) => name),
                         20,
@@ -45,7 +45,7 @@ export const installPlaylistDetails = () => {
         if (!item) return 404
 
         return {
-            item: hideSpoilersFromPlaylist(options.spoilers, item),
+            item: hideSpoilersFromPlaylist(spoilers[0], item),
             description: item.description,
             actions: {},
             hasCommunity: false,

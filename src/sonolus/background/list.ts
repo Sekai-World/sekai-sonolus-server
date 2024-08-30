@@ -8,11 +8,11 @@ export const installBackgroundList = () => {
     sonolus.background.listHandler = ({
         search: { type, options },
         page,
-        options: serverOptions,
+        options: { spoilers },
     }) => {
         const filteredBackgrounds = [
             ...hideSpoilers(
-                serverOptions.spoilers,
+                spoilers[1],
                 sonolus.background.items.filter(
                     (item): item is BackgroundItemModel & { meta: object } =>
                         item.meta !== undefined,
@@ -20,6 +20,7 @@ export const installBackgroundList = () => {
             ),
             ...sonolus.background.items.filter(({ meta }) => !meta),
         ]
+
         if (type === 'quick')
             return {
                 ...paginateItems(filterBackgrounds(filteredBackgrounds, options.keywords), page),
