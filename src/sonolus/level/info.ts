@@ -6,13 +6,13 @@ import { hideSpoilers } from '../utils/spoiler.js'
 import { levelSearches } from './search.js'
 
 export const installLevelInfo = () => {
-    sonolus.level.infoHandler = ({ options }) => {
+    sonolus.level.infoHandler = ({ options: { spoilers } }) => {
         const randomLevels: Record<string, LevelItemModel> = {}
 
         const newestMusicIds = new Set<number>()
         const newestLevels: LevelItemModel[] = []
 
-        for (const level of hideSpoilers(options.spoilers, sonolus.level.items)) {
+        for (const level of hideSpoilers(spoilers[0], sonolus.level.items)) {
             randomLevels[`${level.meta.musicId}-${level.meta.musicVocalId}`] ??= level
 
             if (newestLevels.length >= 5) continue

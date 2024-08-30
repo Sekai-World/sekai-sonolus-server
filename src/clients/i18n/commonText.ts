@@ -1,6 +1,7 @@
 import { fetchI18n } from './fetch.js'
 
 export type CommonTextI18n = {
+    music: string
     character: string
     rarity: string
     attribute: string

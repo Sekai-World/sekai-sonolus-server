@@ -8,15 +8,9 @@ import { hideSpoilersFromPlaylists } from '../utils/spoiler.js'
 import { playlistSearches } from './search.js'
 
 export const installPlaylistList = () => {
-    sonolus.playlist.listHandler = ({
-        search: { type, options },
-        page,
-        options: serverOptions,
-    }) => {
-        const filteredPlaylists = hideSpoilersFromPlaylists(
-            serverOptions.spoilers,
-            sonolus.playlist.items,
-        )
+    sonolus.playlist.listHandler = ({ search: { type, options }, page, options: { spoilers } }) => {
+        const filteredPlaylists = hideSpoilersFromPlaylists(spoilers[0], sonolus.playlist.items)
+
         if (type === 'quick')
             return {
                 ...paginateItems(filterPlaylists(filteredPlaylists, options.keywords), page),
