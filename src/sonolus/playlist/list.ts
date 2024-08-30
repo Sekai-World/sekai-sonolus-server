@@ -61,10 +61,13 @@ export const installPlaylistList = () => {
             ...playlist,
             levels: hideSpoilers(
                 serverOptions.spoilers,
-                playlist.levels.map((levelName) => {
-                    const level = sonolus.level.items.find((level) => level.name === levelName)
+                playlist.levels.map((levelNameOrItem) => {
+                    if (typeof levelNameOrItem === 'object') return levelNameOrItem
+                    const level = sonolus.level.items.find(
+                        (level) => level.name === levelNameOrItem,
+                    )
                     if (!level)
-                        throw new Error(`Unreachable (level not found): ${String(levelName)}`)
+                        throw new Error(`Unreachable (level not found): ${String(levelNameOrItem)}`)
                     return level
                 }),
             ),
