@@ -25,7 +25,7 @@ export const hideSpoilersFromPlaylist = (
             playlist.levels.map((levelNameOrItem) => {
                 if (typeof levelNameOrItem === 'object') return levelNameOrItem
                 const level = sonolus.level.items.find((level) => level.name === levelNameOrItem)
-                if (!level) throw new Error(`Level not found: ${String(levelNameOrItem)}`)
+                if (!level) throw new Error(`Level not found: ${levelNameOrItem}`)
                 return level
             }),
         ),
