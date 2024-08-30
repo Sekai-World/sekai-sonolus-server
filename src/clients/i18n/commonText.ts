@@ -5,6 +5,7 @@ export type CommonTextI18n = {
     rarity: string
     attribute: string
     card: string
+    spoilerContent: string
 }
 
 export const fetchCommonText = fetchI18n<CommonTextI18n>('/common.json')
