@@ -45,7 +45,21 @@ export const installPlaylistDetails = () => {
         if (!item) return 404
 
         return {
-            item,
+            item: {
+                ...item,
+                levels: hideSpoilers(
+                    options.spoilers,
+                    item.levels.map((levelNameOrItem) => {
+                        if (typeof levelNameOrItem === 'object') return levelNameOrItem
+                        const level = sonolus.level.items.find(
+                            (level) => level.name === levelNameOrItem,
+                        )
+                        if (!level)
+                            throw new Error(`Unreachable (level not found): ${String(levelNameOrItem)}`)
+                        return level
+                    }),
+                ),
+            }
             description: item.description,
             actions: {},
             hasCommunity: false,
