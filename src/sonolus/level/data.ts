@@ -11,7 +11,7 @@ import { sonolus } from '../index.js'
 const cachePath = resolve('./cache', 'LevelData', version)
 
 export const installLevelData = () => {
-    sonolus.router.get('/sonolus/levels/:name/data', (req, res, next) => {
+    sonolus.router.get('/sonolus/levels/:name/data', (req, res) => {
         const item = sonolus.level.items.find(({ name }) => name === req.params.name)
         if (!item) {
             res.status(404).end()
@@ -38,7 +38,7 @@ export const installLevelData = () => {
                 await writeFile(path, buffer)
             } catch (error) {
                 console.error(error)
-                next()
+                res.status(500).end()
             }
         })
     })
