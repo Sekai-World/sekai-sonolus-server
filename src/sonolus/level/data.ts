@@ -54,6 +54,7 @@ const getLevelData = async (
 ) => {
     const chart = await fetchMusicChart(id, difficulty, config.clients[server].asset)
     const usc = susToUSC(chart)
+    usc.offset = 0
     const levelData = uscToLevelData(usc, fillerSec)
     return compress(levelData)
 }
