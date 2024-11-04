@@ -5,7 +5,9 @@
   "type": "module",
   "main": "./dist/index.js",
   "scripts": {
-    "prebuild": "tsc -p . --noEmit && eslint . && prettier . --check",
+    "check-type": "tsc -p . --noEmit",
+    "check-lint": "eslint .",
+    "check-format": "prettier . --check",
     "build": "tsc -p ."
   },
   "dependencies": {
