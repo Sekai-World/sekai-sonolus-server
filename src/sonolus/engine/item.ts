@@ -1,14 +1,7 @@
-import {
-    databaseEngineItem,
-    engineConfigurationPath,
-    enginePlayDataPath,
-    enginePreviewDataPath,
-    engineThumbnailPath,
-    engineTutorialDataPath,
-    engineWatchDataPath,
-} from 'sonolus-pjsekai-engine'
+import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
+import { resolveEngineResource } from '../utils/engine.js'
 
 export const installEngineItems = () => {
     sonolus.engine.items.push({
@@ -18,11 +11,11 @@ export const installEngineItems = () => {
         effect: config.sonolus.engine.effect,
         particle: config.sonolus.engine.particle,
         tags: [],
-        thumbnail: sonolus.add(engineThumbnailPath),
-        playData: sonolus.add(enginePlayDataPath),
-        watchData: sonolus.add(engineWatchDataPath),
-        previewData: sonolus.add(enginePreviewDataPath),
-        tutorialData: sonolus.add(engineTutorialDataPath),
-        configuration: sonolus.add(engineConfigurationPath),
+        thumbnail: sonolus.add(resolveEngineResource('EngineThumbnail')),
+        playData: sonolus.add(resolveEngineResource('EnginePlayData')),
+        watchData: sonolus.add(resolveEngineResource('EngineWatchData')),
+        previewData: sonolus.add(resolveEngineResource('EnginePreviewData')),
+        tutorialData: sonolus.add(resolveEngineResource('EngineTutorialData')),
+        configuration: sonolus.add(resolveEngineResource('EngineConfiguration')),
     })
 }
