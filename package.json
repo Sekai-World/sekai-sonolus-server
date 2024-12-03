@@ -12,11 +12,11 @@
   },
   "dependencies": {
     "@sinclair/typebox": "^0.33.22",
-    "@sonolus/core": "~7.9.2",
+    "@sonolus/core": "~7.9.3",
     "@sonolus/express": "~7.2.0",
     "@sonolus/free-pack": "~1.1.5",
     "express": "^4.21.1",
-    "sonolus-pjsekai-engine": "~1.8.0",
+    "sonolus-pjsekai-engine": "~1.8.2",
     "wanakana": "^5.3.1"
   },
   "devDependencies": {
