@@ -27,28 +27,28 @@ export const backgroundSearches = {
                 name: {},
                 required: false,
                 type: 'multi',
-                values: [] as ServerMultiOptionValueModel[],
+                values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             rarities: {
                 name: {},
                 required: false,
                 type: 'multi',
-                values: [] as ServerMultiOptionValueModel[],
+                values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             attributes: {
                 name: {},
                 required: false,
                 type: 'multi',
-                values: [] as ServerMultiOptionValueModel[],
+                values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             images: {
                 name: {},
                 required: false,
                 type: 'multi',
-                values: [
-                    { title: {}, def: true },
-                    { title: {}, def: true },
-                ],
+                values: {
+                    normal: { title: {}, def: true },
+                    trained: { title: {}, def: true },
+                },
             },
         },
     },
@@ -82,8 +82,6 @@ export const updateBackgroundSearches = (repository: Repository) => {
     backgroundSearches.card.options.attributes.values = toOptionValues(repository.attributes)
 
     backgroundSearches.card.options.images.name = repository.commonTexts.card
-    backgroundSearches.card.options.images.values = [
-        { title: repository.cardTexts.normal, def: true },
-        { title: repository.cardTexts.trained, def: true },
-    ]
+    backgroundSearches.card.options.images.values.normal.title = repository.cardTexts.normal
+    backgroundSearches.card.options.images.values.trained.title = repository.cardTexts.trained
 }

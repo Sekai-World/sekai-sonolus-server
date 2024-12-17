@@ -3,13 +3,13 @@ import { filterPlaylists, paginateItems } from '@sonolus/express'
 import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
-import { randomizeItems, toIndexes } from '../utils/list.js'
+import { randomizeItems } from '../utils/list.js'
 import { hideSpoilersFromPlaylists } from '../utils/spoiler.js'
 import { playlistSearches } from './search.js'
 
 export const installPlaylistList = () => {
     sonolus.playlist.listHandler = ({ search: { type, options }, page, options: { spoilers } }) => {
-        const filteredPlaylists = hideSpoilersFromPlaylists(spoilers[0], sonolus.playlist.items)
+        const filteredPlaylists = hideSpoilersFromPlaylists(spoilers.music, sonolus.playlist.items)
 
         if (type === 'quick')
             return {
@@ -39,19 +39,17 @@ export const installPlaylistList = () => {
                 searches: playlistSearches,
             }
 
-        const characterIndexes = toIndexes(options.artists)
-        const musicVocalTypeIndexes = toIndexes(options.categories)
-
         const items = filterPlaylists(
             filteredPlaylists.filter(
                 ({ meta }) =>
                     (!meta.characterIndexes.size ||
-                        characterIndexes.some((characterIndex) =>
-                            meta.characterIndexes.has(characterIndex),
+                        [...meta.characterIndexes].some(
+                            (characterIndex) => options.artists[characterIndex],
                         )) &&
-                    musicVocalTypeIndexes.some((musicVocalIndex) =>
-                        meta.musicVocalTypeIndexes.has(musicVocalIndex),
-                    ),
+                    (!meta.musicVocalTypeIndexes.size ||
+                        [...meta.musicVocalTypeIndexes].some(
+                            (characterIndex) => options.categories[characterIndex],
+                        )),
             ),
             options.keywords,
         )

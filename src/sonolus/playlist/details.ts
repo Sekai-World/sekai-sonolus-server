@@ -23,7 +23,7 @@ export const installPlaylistDetails = () => {
                     author: databaseEngineItem.subtitle,
                     tags: [{ title: { en: Text.Random } }],
                     levels: randomize(
-                        hideSpoilers(spoilers[0], sonolus.level.items)
+                        hideSpoilers(spoilers.music, sonolus.level.items)
                             .filter(({ rating }) => rating >= minRating && rating <= maxRating)
                             .map(({ name }) => name),
                         20,
@@ -45,7 +45,7 @@ export const installPlaylistDetails = () => {
         if (!item) return 404
 
         return {
-            item: hideSpoilersFromPlaylist(spoilers[0], item),
+            item: hideSpoilersFromPlaylist(spoilers.music, item),
             description: item.description,
             actions: {},
             hasCommunity: false,

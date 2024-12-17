@@ -30,13 +30,13 @@ export const levelSearches = {
                 name: { en: Text.Artists },
                 required: false,
                 type: 'multi',
-                values: [] as ServerMultiOptionValueModel[],
+                values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             categories: {
                 name: { en: Text.Category },
                 required: false,
                 type: 'multi',
-                values: [] as ServerMultiOptionValueModel[],
+                values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             difficulties: {
                 name: { en: Text.Difficulty },

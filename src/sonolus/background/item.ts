@@ -75,7 +75,7 @@ export const updateBackgroundItems = (repository: Repository) => {
                 data: backgroundData,
                 image: asset(card.server, getCardImagePath(card.assetbundleName, true)),
                 configuration: backgroundConfiguration,
-                meta: { ...meta, imageIndex: 1 },
+                meta: { ...meta, imageType: 'trained' },
             })
         }
 
@@ -90,7 +90,7 @@ export const updateBackgroundItems = (repository: Repository) => {
             data: backgroundData,
             image: asset(card.server, getCardImagePath(card.assetbundleName, false)),
             configuration: backgroundConfiguration,
-            meta: { ...meta, imageIndex: 0 },
+            meta: { ...meta, imageType: 'normal' },
         })
     }
 
