@@ -1,7 +1,7 @@
 import { Icon, Text } from '@sonolus/core'
-import { BackgroundItemModel } from '@sonolus/express'
 import { randomize } from '../../utils/math.js'
 import { sonolus } from '../index.js'
+import { hasMeta, noMeta } from '../utils/meta.js'
 import { hideSpoilers } from '../utils/spoiler.js'
 import { backgroundSearches } from './search.js'
 
@@ -9,11 +9,9 @@ export const installBackgroundInfo = () => {
     sonolus.background.infoHandler = ({ options: { spoilers } }) => {
         const cardBackgrounds = hideSpoilers(
             spoilers.card,
-            sonolus.background.items.filter(
-                (item): item is BackgroundItemModel & { meta: object } => item.meta !== undefined,
-            ),
+            sonolus.background.items.filter(hasMeta),
         )
-        const otherBackgrounds = sonolus.background.items.filter(({ meta }) => !meta)
+        const otherBackgrounds = sonolus.background.items.filter(noMeta)
 
         return {
             searches: backgroundSearches,

@@ -12,6 +12,7 @@ import { config } from '../../config.js'
 import { Repository } from '../../repository/index.js'
 import { asset } from '../../utils/asset.js'
 import { sonolus } from '../index.js'
+import { HasMeta } from '../utils/meta.js'
 
 let initialBackgrounds: BackgroundItemModel[] | undefined
 
@@ -36,7 +37,7 @@ export const updateBackgroundItems = (repository: Repository) => {
         }),
     )
 
-    const backgrounds: (BackgroundItemModel & { meta: object })[] = []
+    const backgrounds: HasMeta<BackgroundItemModel>[] = []
 
     for (const card of Object.values(repository.cards)) {
         const character = repository.characters[`game_character_${card.characterId}`]
