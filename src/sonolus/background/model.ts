@@ -5,7 +5,7 @@ declare module '@sonolus/express' {
             characterIndex: number
             rarityIndex: number
             attributeIndex: number
-            imageIndex: number
+            imageType: 'normal' | 'trained'
             id: number
             publishedAt: number
         }

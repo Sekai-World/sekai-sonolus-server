@@ -6,7 +6,7 @@ import { playlistSearches } from './search.js'
 
 export const installPlaylistInfo = () => {
     sonolus.playlist.infoHandler = ({ options: { spoilers } }) => {
-        const filteredPlaylists = hideSpoilersFromPlaylists(spoilers[0], sonolus.playlist.items)
+        const filteredPlaylists = hideSpoilersFromPlaylists(spoilers.music, sonolus.playlist.items)
 
         return {
             searches: playlistSearches,

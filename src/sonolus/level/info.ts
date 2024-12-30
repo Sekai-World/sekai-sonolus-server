@@ -12,7 +12,7 @@ export const installLevelInfo = () => {
         const newestMusicIds = new Set<number>()
         const newestLevels: LevelItemModel[] = []
 
-        for (const level of hideSpoilers(spoilers[0], sonolus.level.items)) {
+        for (const level of hideSpoilers(spoilers.music, sonolus.level.items)) {
             randomLevels[`${level.meta.musicId}-${level.meta.musicVocalId}`] ??= level
 
             if (newestLevels.length >= 5) continue

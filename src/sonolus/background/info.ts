@@ -8,7 +8,7 @@ import { backgroundSearches } from './search.js'
 export const installBackgroundInfo = () => {
     sonolus.background.infoHandler = ({ options: { spoilers } }) => {
         const cardBackgrounds = hideSpoilers(
-            spoilers[1],
+            spoilers.card,
             sonolus.background.items.filter(
                 (item): item is BackgroundItemModel & { meta: object } => item.meta !== undefined,
             ),
