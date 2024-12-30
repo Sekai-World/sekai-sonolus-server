@@ -1,6 +1,7 @@
-import { BackgroundItemModel, filterBackgrounds, paginateItems } from '@sonolus/express'
+import { filterBackgrounds, paginateItems } from '@sonolus/express'
 import { sonolus } from '../index.js'
 import { randomizeItems } from '../utils/list.js'
+import { hasMeta, noMeta } from '../utils/meta.js'
 import { hideSpoilers } from '../utils/spoiler.js'
 import { backgroundSearches } from './search.js'
 
@@ -11,14 +12,8 @@ export const installBackgroundList = () => {
         options: { spoilers },
     }) => {
         const filteredBackgrounds = [
-            ...hideSpoilers(
-                spoilers.card,
-                sonolus.background.items.filter(
-                    (item): item is BackgroundItemModel & { meta: object } =>
-                        item.meta !== undefined,
-                ),
-            ),
-            ...sonolus.background.items.filter(({ meta }) => !meta),
+            ...hideSpoilers(spoilers.card, sonolus.background.items.filter(hasMeta)),
+            ...sonolus.background.items.filter(noMeta),
         ]
 
         if (type === 'quick')
@@ -30,10 +25,7 @@ export const installBackgroundList = () => {
         if (type === 'others')
             return {
                 ...paginateItems(
-                    filterBackgrounds(
-                        sonolus.background.items.filter(({ meta }) => !meta),
-                        options.keywords,
-                    ),
+                    filterBackgrounds(sonolus.background.items.filter(noMeta), options.keywords),
                     page,
                 ),
                 searches: backgroundSearches,
