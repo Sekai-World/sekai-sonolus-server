@@ -30,8 +30,8 @@ export const installPlaylistList = () => {
                         tags: [{ title: { en: Text.Random } }],
                         levels: [],
                         meta: {
-                            musicVocalTypeIndexes: new Set(),
-                            characterIndexes: new Set(),
+                            musicVocalTypes: new Set(),
+                            characterIds: new Set(),
                             publishedAt: Date.now(),
                         },
                     },
@@ -42,13 +42,13 @@ export const installPlaylistList = () => {
         const items = filterPlaylists(
             filteredPlaylists.filter(
                 ({ meta }) =>
-                    (!meta.characterIndexes.size ||
-                        [...meta.characterIndexes].some(
-                            (characterIndex) => options.artists[characterIndex],
+                    (!meta.characterIds.size ||
+                        [...meta.characterIds].some(
+                            (characterId) => options.artists[characterId],
                         )) &&
-                    (!meta.musicVocalTypeIndexes.size ||
-                        [...meta.musicVocalTypeIndexes].some(
-                            (characterIndex) => options.categories[characterIndex],
+                    (!meta.musicVocalTypes.size ||
+                        [...meta.musicVocalTypes].some(
+                            (musicVocalType) => options.categories[musicVocalType],
                         )),
             ),
             options.keywords,

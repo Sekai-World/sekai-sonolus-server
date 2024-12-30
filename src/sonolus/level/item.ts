@@ -50,8 +50,6 @@ export const updateLevelItems = (repository: Repository) => {
             ({ musicId }) => musicId === music.id,
         )
 
-        const difficulty = difficulties[musicDifficulty.musicDifficulty]
-
         const description = format(descriptionTemplate, [
             music.lyricist,
             music.composer,
@@ -62,8 +60,8 @@ export const updateLevelItems = (repository: Repository) => {
         const cover = asset(music.server, getMusicCoverPath(music.assetbundleName))
 
         for (const musicVocal of musicVocals) {
-            const musicVocalType = repository.musicVocalTypes[musicVocal.musicVocalType]
-            if (!musicVocalType) continue
+            const musicVocalTypeTitle = repository.musicVocalTypes[musicVocal.musicVocalType]
+                ?.title ?? { en: musicVocal.musicVocalType }
 
             const bgm = asset(musicVocal.server, getMusicBgmPath(musicVocal.assetbundleName))
             if (!repository.whitelist.has(bgm.url)) continue
@@ -75,13 +73,11 @@ export const updateLevelItems = (repository: Repository) => {
                 getMusicPreviewPath(musicVocal.assetbundleName),
             )
 
-            const characters = musicVocal.characters
-                .map(
-                    (character) =>
-                        repository.characters[
-                            `${character.characterType}_${character.characterId}`
-                        ],
-                )
+            const characterIds = musicVocal.characters.map(
+                (character) => `${character.characterType}_${character.characterId}` as const,
+            )
+            const characters = characterIds
+                .map((characterId) => repository.characters[characterId])
                 .filter(notUndefined)
 
             levels.push({
@@ -94,9 +90,12 @@ export const updateLevelItems = (repository: Repository) => {
                           characterSeparator,
                           characters.map((character) => character.title),
                       )
-                    : musicVocalType.title,
+                    : musicVocalTypeTitle,
                 author: databaseEngineItem.subtitle,
-                tags: [{ title: difficulty.title }, { title: musicVocalType.title }],
+                tags: [
+                    { title: difficulties[musicDifficulty.musicDifficulty].title },
+                    { title: musicVocalTypeTitle },
+                ],
                 description,
                 engine: databaseEngineItem.name,
                 useSkin: { useDefault: true },
@@ -110,11 +109,9 @@ export const updateLevelItems = (repository: Repository) => {
                 meta: {
                     musicId: music.id,
                     musicVocalId: musicVocal.id,
+                    musicVocalType: musicVocal.musicVocalType,
                     publishedAt: music.publishedAt,
-                    musicVocalTypeIndex: musicVocalType.index,
-                    musicVocalTypeTitle: musicVocalType.title,
-                    difficultyIndex: difficulty.index,
-                    characterIndexes: characters.map((character) => character.index),
+                    characterIds: [...characterIds].sort(),
                     difficulty: musicDifficulty.musicDifficulty,
                     fillerSec: music.fillerSec,
                     server: musicDifficulty.server,
@@ -127,6 +124,6 @@ export const updateLevelItems = (repository: Repository) => {
         (a, b) =>
             b.meta.publishedAt - a.meta.publishedAt ||
             b.meta.musicId - a.meta.musicId ||
-            a.meta.difficultyIndex - b.meta.difficultyIndex,
+            difficulties[a.meta.difficulty].index - difficulties[b.meta.difficulty].index,
     )
 }

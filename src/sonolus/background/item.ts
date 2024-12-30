@@ -40,26 +40,22 @@ export const updateBackgroundItems = (repository: Repository) => {
     const backgrounds: HasMeta<BackgroundItemModel>[] = []
 
     for (const card of Object.values(repository.cards)) {
-        const character = repository.characters[`game_character_${card.characterId}`]
-        if (!character) continue
+        const characterId = `game_character_${card.characterId}` as const
 
         const cardRarity = repository.cardRarities[card.cardRarityType]
         if (!cardRarity) continue
 
-        const attribute = repository.attributes[card.attr]
-        if (!attribute) continue
-
         const title = card.prefix
-        const subtitle = character.title
+        const subtitle = repository.characters[characterId]?.title ?? { en: `${card.characterId}` }
         const author = databaseEngineItem.subtitle
         const tags: DatabaseTag[] = [
             { title: cardRarity.title, icon: 'star' },
-            { title: attribute.title },
+            { title: repository.attributes[card.attr]?.title ?? { en: card.attr } },
         ]
         const meta = {
-            characterIndex: character.index,
-            rarityIndex: cardRarity.index,
-            attributeIndex: attribute.index,
+            characterId,
+            rarity: card.cardRarityType,
+            attribute: card.attr,
             id: card.id,
             publishedAt: card.releaseAt,
         }
@@ -76,7 +72,7 @@ export const updateBackgroundItems = (repository: Repository) => {
                 data: backgroundData,
                 image: asset(card.server, getCardImagePath(card.assetbundleName, true)),
                 configuration: backgroundConfiguration,
-                meta: { ...meta, imageType: 'trained' },
+                meta: { ...meta, image: 'trained' },
             })
         }
 
@@ -91,7 +87,7 @@ export const updateBackgroundItems = (repository: Repository) => {
             data: backgroundData,
             image: asset(card.server, getCardImagePath(card.assetbundleName, false)),
             configuration: backgroundConfiguration,
-            meta: { ...meta, imageType: 'normal' },
+            meta: { ...meta, image: 'normal' },
         })
     }
 

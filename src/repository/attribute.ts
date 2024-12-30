@@ -12,10 +12,9 @@ export const getAttributes = (data: RepositoryData) =>
             ),
         ]
             .sort((a, b) => a.localeCompare(b))
-            .map((attr, index) => [
+            .map((attr) => [
                 attr,
                 {
-                    index,
                     title: { en: capitalize(attr) },
                 },
             ]),

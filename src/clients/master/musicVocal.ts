@@ -1,3 +1,4 @@
+import { MasterCharacterType } from './characterType.js'
 import { fetchMaster } from './fetch.js'
 
 export type MasterMusicVocal = {
@@ -6,7 +7,7 @@ export type MasterMusicVocal = {
     musicVocalType: string
     caption: string
     characters: {
-        characterType: 'game_character' | 'outside_character'
+        characterType: MasterCharacterType
         characterId: number
     }[]
     assetbundleName: string

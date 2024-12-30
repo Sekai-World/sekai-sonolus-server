@@ -32,7 +32,7 @@ const getOtherDifficulties = (item: LevelItemModel) => ({
         (i) =>
             i.meta.musicId === item.meta.musicId &&
             i.meta.musicVocalId === item.meta.musicVocalId &&
-            i.meta.difficultyIndex !== item.meta.difficultyIndex,
+            i.meta.difficulty !== item.meta.difficulty,
     ),
 })
 
@@ -43,7 +43,7 @@ const getOtherVersions = (item: LevelItemModel) => ({
         (i) =>
             i !== item &&
             i.meta.musicId === item.meta.musicId &&
-            i.meta.difficultyIndex === item.meta.difficultyIndex,
+            i.meta.difficulty === item.meta.difficulty,
     ),
 })
 
@@ -54,8 +54,8 @@ const getSameArtists = (item: LevelItemModel) => ({
         sonolus.level.items.filter(
             (i) =>
                 i.meta.musicId !== item.meta.musicId &&
-                i.meta.difficultyIndex === item.meta.difficultyIndex &&
-                i.meta.characterIndexes.join(',') === item.meta.characterIndexes.join(','),
+                i.meta.difficulty === item.meta.difficulty &&
+                i.meta.characterIds.join(',') === item.meta.characterIds.join(','),
         ),
         5,
     ),
@@ -66,9 +66,7 @@ const getRandom = (item: LevelItemModel) => ({
     icon: Icon.Shuffle,
     itemType: 'level' as const,
     items: randomize(
-        sonolus.level.items.filter(
-            (i) => i !== item && i.meta.difficultyIndex === item.meta.difficultyIndex,
-        ),
+        sonolus.level.items.filter((i) => i !== item && i.meta.difficulty === item.meta.difficulty),
         5,
     ),
 })

@@ -12,9 +12,8 @@ export const getMusicVocalTypes = (data: RepositoryData) =>
                 musicVocal.caption[locale] ??= musicVocalTypeCaption
             },
         ),
-        (_, musicVocal, index) => ({
+        (_, musicVocal) => ({
             ...musicVocal,
-            index,
             title: musicVocal.caption,
         }),
     )

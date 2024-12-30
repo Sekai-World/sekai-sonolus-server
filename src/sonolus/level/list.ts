@@ -17,12 +17,10 @@ export const installLevelList = () => {
         const items = filterLevels(
             filteredLevels.filter(
                 ({ rating, meta }) =>
-                    (!meta.characterIndexes.length ||
-                        meta.characterIndexes.some(
-                            (characterIndex) => options.artists[characterIndex],
-                        )) &&
-                    options.categories[meta.musicVocalTypeIndex] &&
-                    options.difficulties[meta.difficultyIndex] &&
+                    (!meta.characterIds.length ||
+                        meta.characterIds.some((characterId) => options.artists[characterId])) &&
+                    options.categories[meta.musicVocalType] &&
+                    options.difficulties[meta.difficulty] &&
                     rating >= options.minRating &&
                     rating <= options.maxRating,
             ),
