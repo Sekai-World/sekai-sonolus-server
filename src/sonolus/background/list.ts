@@ -35,10 +35,10 @@ export const installBackgroundList = () => {
             filteredBackgrounds.filter(
                 ({ meta }) =>
                     meta &&
-                    options.characters[meta.characterIndex] &&
-                    options.rarities[meta.rarityIndex] &&
-                    options.attributes[meta.attributeIndex] &&
-                    options.images[meta.imageType],
+                    options.characters[meta.characterId] &&
+                    options.rarities[meta.rarity] &&
+                    options.attributes[meta.attribute] &&
+                    options.images[meta.image],
             ),
             options.keywords,
         )

@@ -1,9 +1,10 @@
 import { Icon, Text } from '@sonolus/core'
 import { ServerFormsModel, ServerMultiOptionValueModel } from '@sonolus/express'
 import { difficulties } from '../../clients/master/difficulty.js'
+import { CharacterId } from '../../repository/character.js'
 import { Repository } from '../../repository/index.js'
 import { sonolus } from '../index.js'
-import { toOptionValues } from '../utils/form.js'
+import { toMultiValues } from '../utils/form.js'
 
 export const levelSearches = {
     advanced: {
@@ -30,7 +31,7 @@ export const levelSearches = {
                 name: { en: Text.Artists },
                 required: false,
                 type: 'multi',
-                values: {} as Record<string, ServerMultiOptionValueModel>,
+                values: {} as Record<CharacterId, ServerMultiOptionValueModel>,
             },
             categories: {
                 name: { en: Text.Category },
@@ -42,7 +43,7 @@ export const levelSearches = {
                 name: { en: Text.Difficulty },
                 required: false,
                 type: 'multi',
-                values: toOptionValues(difficulties),
+                values: toMultiValues(difficulties),
             },
             minRating: {
                 name: { en: Text.RatingMinimum },
@@ -67,9 +68,9 @@ export const levelSearches = {
 } satisfies ServerFormsModel
 
 export const updateLevelSearches = (repository: Repository) => {
-    levelSearches.advanced.options.artists.values = toOptionValues(repository.characters)
+    levelSearches.advanced.options.artists.values = toMultiValues(repository.characters)
 
-    levelSearches.advanced.options.categories.values = toOptionValues(repository.musicVocalTypes)
+    levelSearches.advanced.options.categories.values = toMultiValues(repository.musicVocalTypes)
 
     let minRating = Number.POSITIVE_INFINITY
     let maxRating = Number.NEGATIVE_INFINITY

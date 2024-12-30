@@ -35,7 +35,7 @@ const getSameCharacter = (item: BackgroundItemModel) => ({
     itemType: 'background' as const,
     items: randomize(
         sonolus.background.items.filter(
-            (i) => i !== item && i.meta && i.meta.characterIndex === item.meta?.characterIndex,
+            (i) => i !== item && i.meta && i.meta.characterId === item.meta?.characterId,
         ),
         5,
     ),

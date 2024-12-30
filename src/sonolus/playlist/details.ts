@@ -29,8 +29,8 @@ export const installPlaylistDetails = () => {
                         20,
                     ),
                     meta: {
-                        musicVocalTypeIndexes: new Set(),
-                        characterIndexes: new Set(),
+                        musicVocalTypes: new Set(),
+                        characterIds: new Set(),
                         publishedAt: Date.now(),
                     },
                 },

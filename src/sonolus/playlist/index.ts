@@ -12,6 +12,6 @@ export const installPlaylist = () => {
 }
 
 export const updatePlaylist = (repository: Repository) => {
-    updatePlaylistItems()
+    updatePlaylistItems(repository)
     updatePlaylistSearches(repository)
 }

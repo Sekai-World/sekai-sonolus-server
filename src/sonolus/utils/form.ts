@@ -1,20 +1,10 @@
 import { LocalizationText } from '@sonolus/core'
+import { mapValues } from '../../utils/object.js'
 
-export const toOptionValues = (
-    objects: Record<
-        PropertyKey,
-        {
-            index: number
-            title: LocalizationText
-        }
-    >,
+export const toMultiValues = <T extends Record<PropertyKey, { title: LocalizationText }>>(
+    object: T,
 ) =>
-    Object.fromEntries(
-        Object.values(objects).map((object) => [
-            object.index,
-            {
-                title: object.title,
-                def: true,
-            },
-        ]),
-    )
+    mapValues(object, (_, { title }) => ({
+        title,
+        def: true,
+    }))
