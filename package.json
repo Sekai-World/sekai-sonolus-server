@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.13",
-    "@sonolus/core": "~7.10.0",
-    "@sonolus/express": "~7.3.1",
+    "@sonolus/core": "~7.11.0",
+    "@sonolus/express": "~7.3.2",
     "@sonolus/free-pack": "~1.1.6",
     "express": "^4.21.2",
     "sonolus-pjsekai-engine": "~1.8.2",
