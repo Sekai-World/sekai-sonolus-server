@@ -11,23 +11,23 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "@sinclair/typebox": "^0.34.28",
-    "@sonolus/core": "~7.12.0",
-    "@sonolus/express": "~7.3.3",
-    "@sonolus/free-pack": "~1.1.6",
+    "@sinclair/typebox": "^0.34.33",
+    "@sonolus/core": "~7.13.0",
+    "@sonolus/express": "~7.3.4",
+    "@sonolus/free-pack": "~1.1.7",
     "express": "^4.21.2",
-    "sonolus-pjsekai-engine": "~1.8.3",
+    "sonolus-pjsekai-engine": "~1.8.4",
     "wanakana": "^5.3.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
+    "@eslint/js": "^9.23.0",
     "@types/express": "^4.17.21",
-    "@types/node": "^20.17.23",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.0.2",
+    "@types/node": "^20.17.30",
+    "eslint": "^9.23.0",
+    "eslint-config-prettier": "^10.1.1",
     "prettier": "^3.5.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "typescript": "~5.8.2",
-    "typescript-eslint": "^8.26.0"
+    "typescript-eslint": "^8.29.0"
   }
 }
