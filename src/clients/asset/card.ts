@@ -1,7 +1,7 @@
 export const getCardThumbnailPath = (cardAssetBundleName: string, trained: boolean) =>
-    `/thumbnail/chara_rip/${cardAssetBundleName}_${getSuffix(trained)}.png`
+    `/thumbnail/chara/${cardAssetBundleName}_${getSuffix(trained)}.png`
 
 export const getCardImagePath = (cardAssetBundleName: string, trained: boolean) =>
-    `/character/member/${cardAssetBundleName}_rip/card_${getSuffix(trained)}.png`
+    `/character/member/${cardAssetBundleName}/card_${getSuffix(trained)}.png`
 
 const getSuffix = (trained: boolean) => (trained ? 'after_training' : 'normal')
