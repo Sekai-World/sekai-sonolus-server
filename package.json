@@ -16,7 +16,7 @@
     "@sonolus/express": "~7.3.4",
     "@sonolus/free-pack": "~1.1.7",
     "express": "^4.21.2",
-    "sonolus-pjsekai-engine": "~1.8.4",
+    "sonolus-pjsekai-engine": "~1.8.5",
     "wanakana": "^5.3.1"
   },
   "devDependencies": {
