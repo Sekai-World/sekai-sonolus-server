@@ -24,7 +24,6 @@ export const updateBackgroundItems = (repository: Repository) => {
 
     backgroundData ??= sonolus.add(
         compressSync<BackgroundData>({
-            aspectRatio: 2338 / 1440,
             fit: 'cover',
             color: '#000',
         }),
