@@ -14,32 +14,39 @@ export const fetchWhitelist = async (targets: Target[]) => {
             has: () => true,
         }
 
-    const whitelist = new Map<string, boolean>()
-    await Promise.all(
-        [...Array(config.clients.whitelist.threadCount).keys()].map(() =>
-            thread(targets, whitelist),
-        ),
-    )
+    const abortController = new AbortController()
 
-    return {
-        has: (url: string) => whitelist.get(url) ?? false,
+    try {
+        const whitelist = new Map<string, boolean>()
+        await Promise.all(
+            [...Array(config.clients.whitelist.threadCount).keys()].map(() =>
+                thread(targets, whitelist, abortController.signal),
+            ),
+        )
+
+        return {
+            has: (url: string) => whitelist.get(url) ?? false,
+        }
+    } catch (error) {
+        abortController.abort()
+        throw error
     }
 }
 
-const thread = async (targets: Target[], whitelist: Map<string, boolean>) => {
+const thread = async (targets: Target[], whitelist: Map<string, boolean>, signal: AbortSignal) => {
     let target
     while ((target = targets.shift())) {
         const url = asset(target.server, target.path).url
         if (whitelist.has(url)) continue
 
         whitelist.set(url, false)
-        if (await fetchTarget(target)) whitelist.set(url, true)
+        if (await fetchTarget(target, signal)) whitelist.set(url, true)
     }
 }
 
-const fetchTarget = async (target: Target) => {
+const fetchTarget = async (target: Target, signal: AbortSignal) => {
     try {
-        return await fetchHead(target.path, config.clients[target.server].asset)
+        return await fetchHead(target.path, config.clients[target.server].asset, signal)
     } catch {
         return false
     }
