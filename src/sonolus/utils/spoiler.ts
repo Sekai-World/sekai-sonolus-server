@@ -32,11 +32,25 @@ export const hideSpoilersFromPlaylist = (
     }
 }
 
+let cache:
+    | {
+          input: PlaylistItemModel[]
+          output: PlaylistItemModel[]
+      }
+    | undefined = undefined
+
 export const hideSpoilersFromPlaylists = (
     passThrough: boolean | undefined,
     playlists: PlaylistItemModel[],
 ) => {
     if (passThrough) return playlists
 
-    return playlists.map((playlist) => hideSpoilersFromPlaylist(false, playlist))
+    if (cache?.input === playlists) return cache.output
+
+    cache = {
+        input: playlists,
+        output: playlists.map((playlist) => hideSpoilersFromPlaylist(false, playlist)),
+    }
+
+    return cache.output
 }
