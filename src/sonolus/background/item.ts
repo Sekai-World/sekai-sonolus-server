@@ -12,16 +12,16 @@ import { config } from '../../config.js'
 import { Repository } from '../../repository/index.js'
 import { asset } from '../../utils/asset.js'
 import { sonolus } from '../index.js'
+import { Group } from '../utils/group.js'
 import { HasMeta } from '../utils/meta.js'
-
-let initialBackgrounds: BackgroundItemModel[] | undefined
 
 let backgroundData: Srl | undefined
 let backgroundConfiguration: Srl | undefined
 
-export const updateBackgroundItems = (repository: Repository) => {
-    initialBackgrounds ??= [...sonolus.background.items]
+export const cardBackgrounds: Group<HasMeta<BackgroundItemModel>[]> = [[], []]
+export const cardBackgroundsMap = new Map<string, HasMeta<BackgroundItemModel>>()
 
+export const updateBackgroundItems = (repository: Repository) => {
     backgroundData ??= sonolus.add(
         compressSync<BackgroundData>({
             fit: 'cover',
@@ -36,7 +36,7 @@ export const updateBackgroundItems = (repository: Repository) => {
         }),
     )
 
-    const backgrounds: HasMeta<BackgroundItemModel>[] = []
+    cardBackgrounds[1].length = 0
 
     for (const card of Object.values(repository.cards)) {
         const characterId = `game_character_${card.characterId}` as const
@@ -60,7 +60,7 @@ export const updateBackgroundItems = (repository: Repository) => {
         }
 
         if (cardRarity.hasTraining) {
-            backgrounds.push({
+            cardBackgrounds[1].push({
                 name: `${config.sonolus.prefix}-${card.id}-trained`,
                 version: 2,
                 title,
@@ -75,7 +75,7 @@ export const updateBackgroundItems = (repository: Repository) => {
             })
         }
 
-        backgrounds.push({
+        cardBackgrounds[1].push({
             name: `${config.sonolus.prefix}-${card.id}-normal`,
             version: 2,
             title,
@@ -90,8 +90,11 @@ export const updateBackgroundItems = (repository: Repository) => {
         })
     }
 
-    sonolus.background.items = [
-        ...initialBackgrounds,
-        ...backgrounds.sort((a, b) => b.meta.publishedAt - a.meta.publishedAt),
-    ]
+    cardBackgrounds[1].sort((a, b) => b.meta.publishedAt - a.meta.publishedAt)
+    cardBackgrounds[0] = cardBackgrounds[1].filter((item) => item.meta.publishedAt <= Date.now())
+
+    cardBackgroundsMap.clear()
+    for (const background of cardBackgrounds[1]) {
+        cardBackgroundsMap.set(background.name, background)
+    }
 }

@@ -7,12 +7,13 @@ import { MasterDifficulty } from '../../clients/master/difficulty.js'
 import { Server } from '../../clients/master/server.js'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
+import { levelsMap } from './item.js'
 
 const cachePath = resolve('./cache', 'LevelData', version)
 
 export const installLevelData = () => {
     sonolus.router.get('/sonolus/levels/:name/data', (req, res) => {
-        const item = sonolus.level.items.find(({ name }) => name === req.params.name)
+        const item = levelsMap.get(req.params.name)
         if (!item) {
             res.status(404).end()
             return

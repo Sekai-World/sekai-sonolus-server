@@ -11,6 +11,7 @@ declare module '@sonolus/express' {
             musicVocalType: string
             publishedAt: number
             characterIds: CharacterId[]
+            characters: string
             difficulty: MasterDifficulty
             fillerSec: number
             server: Server

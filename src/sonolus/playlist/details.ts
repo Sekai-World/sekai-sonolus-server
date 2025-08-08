@@ -4,8 +4,9 @@ import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { randomize } from '../../utils/math.js'
 import { sonolus } from '../index.js'
+import { levels } from '../level/item.js'
 import { nonEmpty } from '../utils/section.js'
-import { hideSpoilers, hideSpoilersFromPlaylist } from '../utils/spoiler.js'
+import { playlists, playlistsMap } from './item.js'
 
 export const installPlaylistDetails = () => {
     sonolus.playlist.detailsHandler = ({ itemName, options: { spoilers } }) => {
@@ -23,9 +24,9 @@ export const installPlaylistDetails = () => {
                     author: databaseEngineItem.subtitle,
                     tags: [{ title: { en: Text.Random } }],
                     levels: randomize(
-                        hideSpoilers(spoilers.music, sonolus.level.items)
-                            .filter(({ rating }) => rating >= minRating && rating <= maxRating)
-                            .map(({ name }) => name),
+                        levels[spoilers.music ? 1 : 0].filter(
+                            ({ rating }) => rating >= minRating && rating <= maxRating,
+                        ),
                         20,
                     ),
                     meta: {
@@ -41,26 +42,26 @@ export const installPlaylistDetails = () => {
             }
         }
 
-        const item = sonolus.playlist.items.find(({ name }) => name === itemName)
+        const item = playlistsMap[spoilers.music ? 1 : 0].get(itemName)
         if (!item) return 404
 
         return {
-            item: hideSpoilersFromPlaylist(spoilers.music, item),
+            item,
             description: item.description,
             actions: {},
             hasCommunity: false,
             leaderboards: [],
-            sections: [getRandom(item)].filter(nonEmpty),
+            sections: [getRandom(spoilers.music, item)].filter(nonEmpty),
         }
     }
 }
 
-const getRandom = (item: PlaylistItemModel) => ({
+const getRandom = (spoiler: boolean, item: PlaylistItemModel) => ({
     title: { en: Text.Random },
     icon: Icon.Shuffle,
     itemType: 'playlist' as const,
     items: randomize(
-        sonolus.playlist.items.filter((i) => i !== item),
+        playlists[spoiler ? 1 : 0].filter((i) => i.name !== item.name),
         5,
     ),
 })
