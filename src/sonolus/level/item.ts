@@ -11,7 +11,7 @@ import { config } from '../../config.js'
 import { Repository } from '../../repository/index.js'
 import { asset } from '../../utils/asset.js'
 import { notUndefined } from '../../utils/object.js'
-import { sonolus } from '../index.js'
+import { Group } from '../utils/group.js'
 import { format, join } from '../utils/i18n.js'
 import { getLevelDataUrl } from './data.js'
 
@@ -33,8 +33,11 @@ const characterSeparator = {
     es: ' & ',
 }
 
+export const levels: Group<LevelItemModel[]> = [[], []]
+export const levelsMap = new Map<string, LevelItemModel>()
+
 export const updateLevelItems = (repository: Repository) => {
-    const levels: LevelItemModel[] = []
+    levels[1].length = 0
 
     for (const musicDifficulty of Object.values(repository.musicDifficulties)) {
         const music = repository.musics[musicDifficulty.musicId]
@@ -80,7 +83,7 @@ export const updateLevelItems = (repository: Repository) => {
                 .map((characterId) => repository.characters[characterId])
                 .filter(notUndefined)
 
-            levels.push({
+            levels[1].push({
                 name,
                 version: 1,
                 rating: musicDifficulty.playLevel,
@@ -111,7 +114,8 @@ export const updateLevelItems = (repository: Repository) => {
                     musicVocalId: musicVocal.id,
                     musicVocalType: musicVocal.musicVocalType,
                     publishedAt: music.publishedAt,
-                    characterIds: [...characterIds].sort(),
+                    characterIds,
+                    characters: characterIds.sort().join(),
                     difficulty: musicDifficulty.musicDifficulty,
                     fillerSec: music.fillerSec,
                     server: musicDifficulty.server,
@@ -120,10 +124,16 @@ export const updateLevelItems = (repository: Repository) => {
         }
     }
 
-    sonolus.level.items = levels.sort(
+    levels[1].sort(
         (a, b) =>
             b.meta.publishedAt - a.meta.publishedAt ||
             b.meta.musicId - a.meta.musicId ||
             difficulties[a.meta.difficulty].index - difficulties[b.meta.difficulty].index,
     )
+    levels[0] = levels[1].filter((item) => item.meta.publishedAt <= Date.now())
+
+    levelsMap.clear()
+    for (const level of levels[1]) {
+        levelsMap.set(level.name, level)
+    }
 }

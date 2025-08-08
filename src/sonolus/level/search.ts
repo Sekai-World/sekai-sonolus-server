@@ -3,8 +3,8 @@ import { ServerFormsModel, ServerMultiOptionValueModel } from '@sonolus/express'
 import { difficulties } from '../../clients/master/difficulty.js'
 import { CharacterId } from '../../repository/character.js'
 import { Repository } from '../../repository/index.js'
-import { sonolus } from '../index.js'
 import { toMultiValues } from '../utils/form.js'
+import { levels } from './item.js'
 
 export const levelSearches = {
     advanced: {
@@ -74,7 +74,7 @@ export const updateLevelSearches = (repository: Repository) => {
 
     let minRating = Number.POSITIVE_INFINITY
     let maxRating = Number.NEGATIVE_INFINITY
-    for (const level of sonolus.level.items) {
+    for (const level of levels[1]) {
         minRating = Math.min(minRating, level.rating)
         maxRating = Math.max(maxRating, level.rating)
     }

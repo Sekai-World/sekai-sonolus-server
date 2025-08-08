@@ -2,42 +2,49 @@ import { Icon, Text } from '@sonolus/core'
 import { LevelItemModel } from '@sonolus/express'
 import { randomize } from '../../utils/math.js'
 import { sonolus } from '../index.js'
-import { hideSpoilers } from '../utils/spoiler.js'
+import { Group } from '../utils/group.js'
+import { levels } from './item.js'
 import { levelSearches } from './search.js'
 
+const randomLevels: Group<LevelItemModel[]> = [[], []]
+const newestLevels: Group<LevelItemModel[]> = [[], []]
+
 export const installLevelInfo = () => {
-    sonolus.level.infoHandler = ({ options: { spoilers } }) => {
-        const randomLevels: Record<string, LevelItemModel> = {}
+    sonolus.level.infoHandler = ({ options: { spoilers } }) => ({
+        searches: levelSearches,
+        sections: [
+            {
+                title: { en: Text.Random },
+                icon: Icon.Shuffle,
+                itemType: 'level',
+                items: randomize(randomLevels[spoilers.music ? 1 : 0], 5),
+            },
+            {
+                title: { en: Text.Newest },
+                itemType: 'level',
+                items: newestLevels[spoilers.music ? 1 : 0],
+            },
+        ],
+        banner: sonolus.banner,
+    })
+}
 
+export const updateLevelInfo = () => {
+    for (const i of [0, 1] as const) {
+        newestLevels[i].length = 0
+
+        const randomLevelsMap: Record<string, LevelItemModel> = {}
         const newestMusicIds = new Set<number>()
-        const newestLevels: LevelItemModel[] = []
+        for (const level of levels[i]) {
+            randomLevelsMap[`${level.meta.musicId}-${level.meta.musicVocalId}`] ??= level
 
-        for (const level of hideSpoilers(spoilers.music, sonolus.level.items)) {
-            randomLevels[`${level.meta.musicId}-${level.meta.musicVocalId}`] ??= level
-
-            if (newestLevels.length >= 5) continue
+            if (newestLevels[i].length >= 5) continue
             if (newestMusicIds.has(level.meta.musicId)) continue
 
             newestMusicIds.add(level.meta.musicId)
-            newestLevels.push(level)
+            newestLevels[i].push(level)
         }
 
-        return {
-            searches: levelSearches,
-            sections: [
-                {
-                    title: { en: Text.Random },
-                    icon: Icon.Shuffle,
-                    itemType: 'level',
-                    items: randomize(Object.values(randomLevels), 5),
-                },
-                {
-                    title: { en: Text.Newest },
-                    itemType: 'level',
-                    items: newestLevels,
-                },
-            ],
-            banner: sonolus.banner,
-        }
+        randomLevels[i] = Object.values(randomLevelsMap)
     }
 }

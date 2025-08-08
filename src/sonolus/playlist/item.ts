@@ -1,19 +1,25 @@
 import { PlaylistItemModel } from '@sonolus/express'
 import { config } from '../../config.js'
 import { Repository } from '../../repository/index.js'
-import { sonolus } from '../index.js'
+import { levels } from '../level/item.js'
+import { Group } from '../utils/group.js'
+
+export const playlists: Group<PlaylistItemModel[]> = [[], []]
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+export const playlistsMap: Group<Map<string, PlaylistItemModel>> = [new Map(), new Map()]
 
 export const updatePlaylistItems = (repository: Repository) => {
-    const playlists = new Map<number, PlaylistItemModel>()
+    playlistsMap[1].clear()
 
-    for (const level of sonolus.level.items) {
-        const playlist = playlists.get(level.meta.musicId)
+    for (const level of levels[1]) {
+        const name = `${config.sonolus.prefix}-${level.meta.musicId}`
 
         const musicVocalTypeTitle = repository.musicVocalTypes[level.meta.musicVocalType]
             ?.title ?? { en: level.meta.musicVocalType }
 
+        const playlist = playlistsMap[1].get(name)
         if (playlist) {
-            playlist.levels.push(level.name)
+            playlist.levels.push(level)
 
             if (!playlist.meta.musicVocalTypes.has(level.meta.musicVocalType)) {
                 playlist.tags.push({ title: musicVocalTypeTitle })
@@ -28,15 +34,15 @@ export const updatePlaylistItems = (repository: Repository) => {
                 playlist.meta.publishedAt = level.meta.publishedAt
             }
         } else {
-            playlists.set(level.meta.musicId, {
-                name: `${config.sonolus.prefix}-${level.meta.musicId}`,
+            playlistsMap[1].set(name, {
+                name,
                 version: 1,
                 title: level.title,
                 subtitle: level.artists,
                 author: level.author,
                 tags: [{ title: musicVocalTypeTitle }],
                 description: level.description,
-                levels: [level.name],
+                levels: [level],
                 meta: {
                     musicVocalTypes: new Set([level.meta.musicVocalType]),
                     characterIds: new Set(level.meta.characterIds),
@@ -46,5 +52,17 @@ export const updatePlaylistItems = (repository: Repository) => {
         }
     }
 
-    sonolus.playlist.items = [...playlists.values()]
+    playlists[1] = [...playlistsMap[1].values()]
+
+    playlistsMap[0].clear()
+    for (const playlist of playlists[1]) {
+        playlistsMap[0].set(playlist.name, {
+            ...playlist,
+            levels: playlist.levels.filter(
+                (item) => typeof item === 'object' && item.meta.publishedAt <= Date.now(),
+            ),
+        })
+    }
+
+    playlists[0] = [...playlistsMap[0].values()].filter((item) => item.levels.length)
 }

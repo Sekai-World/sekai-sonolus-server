@@ -1,29 +1,33 @@
 import { Icon, Text } from '@sonolus/core'
+import { PlaylistItemModel } from '@sonolus/express'
 import { randomize } from '../../utils/math.js'
 import { sonolus } from '../index.js'
-import { hideSpoilersFromPlaylists } from '../utils/spoiler.js'
+import { Group, mapGroup } from '../utils/group.js'
+import { playlists } from './item.js'
 import { playlistSearches } from './search.js'
 
-export const installPlaylistInfo = () => {
-    sonolus.playlist.infoHandler = ({ options: { spoilers } }) => {
-        const filteredPlaylists = hideSpoilersFromPlaylists(spoilers.music, sonolus.playlist.items)
+let newestPlaylists: Group<PlaylistItemModel[]> = [[], []]
 
-        return {
-            searches: playlistSearches,
-            sections: [
-                {
-                    title: { en: Text.Random },
-                    icon: Icon.Shuffle,
-                    itemType: 'playlist',
-                    items: randomize(filteredPlaylists, 5),
-                },
-                {
-                    title: { en: Text.Newest },
-                    itemType: 'playlist',
-                    items: filteredPlaylists.slice(0, 5),
-                },
-            ],
-            banner: sonolus.banner,
-        }
-    }
+export const installPlaylistInfo = () => {
+    sonolus.playlist.infoHandler = ({ options: { spoilers } }) => ({
+        searches: playlistSearches,
+        sections: [
+            {
+                title: { en: Text.Random },
+                icon: Icon.Shuffle,
+                itemType: 'playlist',
+                items: randomize(playlists[spoilers.music ? 1 : 0], 5),
+            },
+            {
+                title: { en: Text.Newest },
+                itemType: 'playlist',
+                items: newestPlaylists[spoilers.music ? 1 : 0],
+            },
+        ],
+        banner: sonolus.banner,
+    })
+}
+
+export const updatePlaylistInfo = () => {
+    newestPlaylists = mapGroup(playlists, (items) => items.slice(0, 5))
 }

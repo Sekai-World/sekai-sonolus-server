@@ -1,9 +1,11 @@
-import { filterBackgrounds, paginateItems } from '@sonolus/express'
+import { BackgroundItemModel, filterBackgrounds, paginateItems } from '@sonolus/express'
 import { sonolus } from '../index.js'
+import { Group, mapGroup } from '../utils/group.js'
 import { randomizeItems } from '../utils/list.js'
-import { hasMeta, noMeta } from '../utils/meta.js'
-import { hideSpoilers } from '../utils/spoiler.js'
+import { cardBackgrounds } from './item.js'
 import { backgroundSearches } from './search.js'
+
+let allBackgrounds: Group<BackgroundItemModel[]> = [[], []]
 
 export const installBackgroundList = () => {
     sonolus.background.listHandler = ({
@@ -11,30 +13,27 @@ export const installBackgroundList = () => {
         page,
         options: { spoilers },
     }) => {
-        const filteredBackgrounds = [
-            ...hideSpoilers(spoilers.card, sonolus.background.items.filter(hasMeta)),
-            ...sonolus.background.items.filter(noMeta),
-        ]
-
         if (type === 'quick')
             return {
-                ...paginateItems(filterBackgrounds(filteredBackgrounds, options.keywords), page),
+                ...paginateItems(
+                    filterBackgrounds(allBackgrounds[spoilers.card ? 1 : 0], options.keywords),
+                    page,
+                ),
                 searches: backgroundSearches,
             }
 
         if (type === 'others')
             return {
                 ...paginateItems(
-                    filterBackgrounds(sonolus.background.items.filter(noMeta), options.keywords),
+                    filterBackgrounds(sonolus.background.items, options.keywords),
                     page,
                 ),
                 searches: backgroundSearches,
             }
 
         const items = filterBackgrounds(
-            filteredBackgrounds.filter(
+            cardBackgrounds[spoilers.card ? 1 : 0].filter(
                 ({ meta }) =>
-                    meta &&
                     options.characters[meta.characterId] &&
                     options.rarities[meta.rarity] &&
                     options.attributes[meta.attribute] &&
@@ -48,4 +47,11 @@ export const installBackgroundList = () => {
             searches: backgroundSearches,
         }
     }
+}
+
+export const updateBackgroundList = () => {
+    allBackgrounds = mapGroup(cardBackgrounds, (backgrounds) => [
+        ...backgrounds,
+        ...sonolus.background.items,
+    ])
 }

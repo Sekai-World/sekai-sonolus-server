@@ -4,16 +4,17 @@ import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
 import { randomizeItems } from '../utils/list.js'
-import { hideSpoilersFromPlaylists } from '../utils/spoiler.js'
+import { playlists } from './item.js'
 import { playlistSearches } from './search.js'
 
 export const installPlaylistList = () => {
     sonolus.playlist.listHandler = ({ search: { type, options }, page, options: { spoilers } }) => {
-        const filteredPlaylists = hideSpoilersFromPlaylists(spoilers.music, sonolus.playlist.items)
-
         if (type === 'quick')
             return {
-                ...paginateItems(filterPlaylists(filteredPlaylists, options.keywords), page),
+                ...paginateItems(
+                    filterPlaylists(playlists[spoilers.music ? 1 : 0], options.keywords),
+                    page,
+                ),
                 searches: playlistSearches,
             }
 
@@ -40,7 +41,7 @@ export const installPlaylistList = () => {
             }
 
         const items = filterPlaylists(
-            filteredPlaylists.filter(
+            playlists[spoilers.music ? 1 : 0].filter(
                 ({ meta }) =>
                     (!meta.characterIds.size ||
                         [...meta.characterIds].some(
