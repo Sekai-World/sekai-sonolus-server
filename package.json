@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@sinclair/typebox": "^0.34.38",
-    "@sonolus/core": "~7.14.0",
+    "@sonolus/core": "~7.14.1",
     "@sonolus/express": "~7.4.0",
     "@sonolus/free-pack": "~1.2.0",
     "express": "^4.21.2",
