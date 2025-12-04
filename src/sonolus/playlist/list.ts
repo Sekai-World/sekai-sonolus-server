@@ -1,9 +1,9 @@
 import { Text } from '@sonolus/core'
 import { filterPlaylists, paginateItems } from '@sonolus/express'
-import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
 import { randomizeItems } from '../utils/list.js'
+import { sekaiText } from '../utils/sekai.js'
 import { playlists } from './item.js'
 import { playlistSearches } from './search.js'
 
@@ -27,7 +27,7 @@ export const installPlaylistList = () => {
                         version: 1,
                         title: { en: `${options.minRating} - ${options.maxRating}` },
                         subtitle: {},
-                        author: databaseEngineItem.subtitle,
+                        author: sekaiText,
                         tags: [{ title: { en: Text.Random } }],
                         levels: [],
                         meta: {

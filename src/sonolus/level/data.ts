@@ -1,7 +1,7 @@
+import { susToUSC, uscToLevelData, version } from '@next-sekai/sonolus-next-sekai-engine'
 import { compress } from '@sonolus/core'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
-import { susToUSC, uscToLevelData, version } from 'sonolus-pjsekai-engine'
 import { fetchMusicChart } from '../../clients/asset/music.js'
 import { MasterDifficulty } from '../../clients/master/difficulty.js'
 import { Server } from '../../clients/master/server.js'
@@ -9,7 +9,7 @@ import { config } from '../../config.js'
 import { sonolus } from '../index.js'
 import { levelsMap } from './item.js'
 
-const cachePath = resolve('./cache', 'LevelData', version)
+const cachePath = resolve('./cache', 'LevelData', `next-sekai-${version}`)
 
 export const installLevelData = () => {
     sonolus.router.get('/sonolus/levels/:name/data', (req, res) => {
@@ -45,7 +45,8 @@ export const installLevelData = () => {
     })
 }
 
-export const getLevelDataUrl = (name: string) => `/sonolus/levels/${name}/data?${version}`
+export const getLevelDataUrl = (name: string) =>
+    `/sonolus/levels/${name}/data?next-sekai-${version}`
 
 const getLevelData = async (
     id: number,

@@ -1,12 +1,12 @@
-import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
+import { sekaiText } from '../utils/sekai.js'
 
 export const installInfo = () => {
     if (config.sonolus.bannerPath) sonolus.banner = sonolus.add(config.sonolus.bannerPath)
 
     sonolus.serverInfoHandler = () => ({
-        title: databaseEngineItem.subtitle,
+        title: sekaiText,
         buttons: [
             { type: 'post' },
             { type: 'playlist' },
