@@ -1,4 +1,4 @@
-import { databaseEngineItem } from 'sonolus-pjsekai-engine'
+import { databaseEngineItem } from '@next-sekai/sonolus-next-sekai-engine'
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
 import { resolveEngineResource } from '../utils/engine.js'
@@ -16,6 +16,7 @@ export const installEngineItems = () => {
         watchData: sonolus.add(resolveEngineResource('EngineWatchData')),
         previewData: sonolus.add(resolveEngineResource('EnginePreviewData')),
         tutorialData: sonolus.add(resolveEngineResource('EngineTutorialData')),
+        rom: sonolus.add(resolveEngineResource('EngineRom')),
         configuration: sonolus.add(resolveEngineResource('EngineConfiguration')),
     })
 }

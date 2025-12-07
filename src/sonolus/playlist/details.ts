@@ -1,11 +1,11 @@
 import { Icon, Text } from '@sonolus/core'
 import { PlaylistItemModel } from '@sonolus/express'
-import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { config } from '../../config.js'
 import { randomize } from '../../utils/math.js'
 import { sonolus } from '../index.js'
 import { levels } from '../level/item.js'
 import { nonEmpty } from '../utils/section.js'
+import { sekaiText } from '../utils/sekai.js'
 import { playlists, playlistsMap } from './item.js'
 
 export const installPlaylistDetails = () => {
@@ -21,7 +21,7 @@ export const installPlaylistDetails = () => {
                     version: 1,
                     title: { en: `${minRating} - ${maxRating}` },
                     subtitle: {},
-                    author: databaseEngineItem.subtitle,
+                    author: sekaiText,
                     tags: [{ title: { en: Text.Random } }],
                     levels: randomize(
                         levels[spoilers.music ? 1 : 0].filter(

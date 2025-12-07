@@ -6,7 +6,6 @@ import {
     Srl,
 } from '@sonolus/core'
 import { BackgroundItemModel } from '@sonolus/express'
-import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import { getCardImagePath, getCardThumbnailPath } from '../../clients/asset/card.js'
 import { config } from '../../config.js'
 import { Repository } from '../../repository/index.js'
@@ -14,6 +13,7 @@ import { asset } from '../../utils/asset.js'
 import { sonolus } from '../index.js'
 import { Group } from '../utils/group.js'
 import { HasMeta } from '../utils/meta.js'
+import { sekaiText } from '../utils/sekai.js'
 
 let backgroundData: Srl | undefined
 let backgroundConfiguration: Srl | undefined
@@ -46,7 +46,7 @@ export const updateBackgroundItems = (repository: Repository) => {
 
         const title = card.prefix
         const subtitle = repository.characters[characterId]?.title ?? { en: `${card.characterId}` }
-        const author = databaseEngineItem.subtitle
+        const author = sekaiText
         const tags: DatabaseTag[] = [
             { title: cardRarity.title, icon: 'star' },
             { title: repository.attributes[card.attr]?.title ?? { en: card.attr } },

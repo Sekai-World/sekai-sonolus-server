@@ -11,12 +11,12 @@
     "build": "tsc -p ."
   },
   "dependencies": {
+    "@next-sekai/sonolus-next-sekai-engine": "^1.7.0",
     "@sinclair/typebox": "^0.34.41",
     "@sonolus/core": "~7.14.2",
     "@sonolus/express": "~7.4.0",
     "@sonolus/free-pack": "~1.2.0",
     "express": "^4.22.1",
-    "sonolus-pjsekai-engine": "~1.9.0",
     "wanakana": "^5.3.1"
   },
   "devDependencies": {

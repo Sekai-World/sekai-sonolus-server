@@ -1,5 +1,4 @@
 import { LevelItemModel } from '@sonolus/express'
-import { databaseEngineItem } from 'sonolus-pjsekai-engine'
 import {
     getMusicBgmPath,
     getMusicChartPath,
@@ -13,6 +12,7 @@ import { asset } from '../../utils/asset.js'
 import { notUndefined } from '../../utils/object.js'
 import { Group } from '../utils/group.js'
 import { format, join } from '../utils/i18n.js'
+import { sekaiText } from '../utils/sekai.js'
 import { getLevelDataUrl } from './data.js'
 
 const descriptionTemplate = {
@@ -94,13 +94,13 @@ export const updateLevelItems = (repository: Repository) => {
                           characters.map((character) => character.title),
                       )
                     : musicVocalTypeTitle,
-                author: databaseEngineItem.subtitle,
+                author: sekaiText,
                 tags: [
                     { title: difficulties[musicDifficulty.musicDifficulty].title },
                     { title: musicVocalTypeTitle },
                 ],
                 description,
-                engine: databaseEngineItem.name,
+                engine: 'next-sekai',
                 useSkin: { useDefault: true },
                 useBackground: { useDefault: true },
                 useEffect: { useDefault: true },
