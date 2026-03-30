@@ -84,6 +84,10 @@ Path to pack, optional. Use [@sonolus/pack](https://github.com/Sonolus/sonolus-p
 
 Examples: `./path/to/pack`.
 
+### `sonolus.description`
+
+Server description.
+
 ### `sonolus.post.info.author`
 
 Info post author.
