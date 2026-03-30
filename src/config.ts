@@ -17,6 +17,7 @@ const configSchema = Type.Object({
         fallbackLocale: Type.String(),
         bannerPath: Type.String(),
         packPath: Type.String(),
+        description: localizationTextSchema,
         post: Type.Object({
             info: Type.Object({
                 author: localizationTextSchema,

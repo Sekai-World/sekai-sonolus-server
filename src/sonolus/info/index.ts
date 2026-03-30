@@ -7,6 +7,7 @@ export const installInfo = () => {
 
     sonolus.serverInfoHandler = () => ({
         title: sekaiText,
+        description: config.sonolus.description,
         buttons: [
             { type: 'post' },
             { type: 'playlist' },
