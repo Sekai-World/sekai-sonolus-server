@@ -1,4 +1,5 @@
-# Sekai Sonolus Server
+# Sekai Sonolus C<img width="148" height="130" alt="1000018431" src="https://github.com/user-attachments/assets/8433a5b7-d0a3-4011-a367-cb21b0f7bc31" />
+ommunity Server
 
 A [Sonolus](https://sonolus.com) server for Project Sekai: Colorful Stage!.
 
