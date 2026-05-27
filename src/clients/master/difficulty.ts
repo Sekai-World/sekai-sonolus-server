@@ -3,7 +3,7 @@ import { mapValues } from '../../utils/object.js'
 
 export const difficulties = mapValues(
     {
-        append: { en: 'Append' },
+        append: { en: Text.Append },
         master: { en: Text.Master },
         expert: { en: Text.Expert },
         hard: { en: Text.Hard },
