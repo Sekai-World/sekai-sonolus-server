@@ -11,7 +11,7 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "@next-sekai/sonolus-next-sekai-engine": "~1.15.3",
+    "@next-sekai/sonolus-next-sekai-engine": "~1.16.10",
     "@sinclair/typebox": "^0.34.49",
     "@sonolus/core": "~7.15.2",
     "@sonolus/express": "~7.5.2",
