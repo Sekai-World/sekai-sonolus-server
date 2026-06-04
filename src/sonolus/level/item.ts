@@ -15,24 +15,6 @@ import { format, join } from '../utils/i18n.js'
 import { sekaiText } from '../utils/sekai.js'
 import { getLevelDataUrl } from './data.js'
 
-const descriptionTemplate = {
-    ja: '作詞: {}\n作曲: {}\n編曲: {}\n\n{}',
-    en: 'Lyrics: {}\nComposer: {}\nArrangement: {}\n\n{}',
-    ko: '작사: {}\n작곡: {}\n편곡: {}\n\n{}',
-    zht: '作詞: {}\n作曲: {}\n編曲: {}\n\n{}',
-    zhs: '歌词: {}\n作曲: {}\n编曲: {}\n\n{}',
-    es: 'Letras: {}\nCompositor: {}\nArreglos: {}\n\n{}',
-}
-
-const characterSeparator = {
-    ja: ' & ',
-    en: ' & ',
-    ko: ' & ',
-    zht: ' & ',
-    zhs: ' & ',
-    es: ' & ',
-}
-
 export const levels: Group<LevelItemModel[]> = [[], []]
 export const levelsMap = new Map<string, LevelItemModel>()
 
@@ -53,12 +35,16 @@ export const updateLevelItems = (repository: Repository) => {
             ({ musicId }) => musicId === music.id,
         )
 
-        const description = format(descriptionTemplate, [
-            music.lyricist,
-            music.composer,
-            music.arranger,
-            { ja: music.keywords },
-        ])
+        const description = format(
+            [
+                '#LYRICIST:#SEPARATOR_COLON:{0}',
+                '#COMPOSER:#SEPARATOR_COLON:{1}',
+                '#ARRANGER:#SEPARATOR_COLON:{2}',
+                '',
+                `##:${music.keywords}`,
+            ].join('\n'),
+            [music.lyricist, music.composer, music.arranger],
+        )
 
         const cover = asset(music.server, getMusicCoverPath(music.assetbundleName))
 
@@ -90,7 +76,7 @@ export const updateLevelItems = (repository: Repository) => {
                 title: music.title,
                 artists: characters.length
                     ? join(
-                          characterSeparator,
+                          ' & ',
                           characters.map((character) => character.title),
                       )
                     : musicVocalTypeTitle,
