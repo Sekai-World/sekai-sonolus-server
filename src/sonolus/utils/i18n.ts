@@ -1,4 +1,5 @@
 import { LocalizationText, localize } from '@sonolus/core'
+
 import { locales } from '../../clients/i18n/locale.js'
 import { config } from '../../config.js'
 

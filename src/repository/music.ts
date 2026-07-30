@@ -1,4 +1,5 @@
 import { toRomaji } from 'wanakana'
+
 import { mapValues } from '../utils/object.js'
 import { RepositoryData } from './data.js'
 import { match } from './utils/match.js'

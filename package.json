@@ -6,8 +6,8 @@
   "main": "./dist/index.js",
   "scripts": {
     "check-type": "tsc -p . --noEmit",
-    "check-lint": "eslint .",
-    "check-format": "prettier . --check",
+    "check-lint": "oxlint",
+    "check-format": "oxfmt --check",
     "build": "tsc -p ."
   },
   "dependencies": {
@@ -20,14 +20,11 @@
     "wanakana": "^5.3.1"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
     "@types/express": "^4.17.25",
     "@types/node": "^22.20.1",
-    "eslint": "^10.8.0",
-    "eslint-config-prettier": "^10.1.8",
-    "prettier": "^3.9.6",
-    "prettier-plugin-organize-imports": "^4.3.0",
-    "typescript": "~6.0.3",
-    "typescript-eslint": "^8.65.0"
+    "oxfmt": "^0.61.0",
+    "oxlint": "^1.76.0",
+    "oxlint-tsgolint": "^7.0.2001",
+    "typescript": "~7.0.2"
   }
 }

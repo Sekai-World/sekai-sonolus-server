@@ -1,5 +1,6 @@
 import { Icon, Text } from '@sonolus/core'
 import { ServerFormsModel, ServerMultiOptionValueModel } from '@sonolus/express'
+
 import { difficulties } from '../../clients/master/difficulty.js'
 import { CharacterId } from '../../repository/character.js'
 import { Repository } from '../../repository/index.js'
@@ -31,14 +32,12 @@ export const levelSearches = {
                 name: { en: Text.Artists },
                 required: false,
                 type: 'multi',
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
                 values: {} as Record<CharacterId, ServerMultiOptionValueModel>,
             },
             categories: {
                 name: { en: Text.Category },
                 required: false,
                 type: 'multi',
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
                 values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             difficulties: {

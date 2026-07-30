@@ -1,7 +1,9 @@
-import { susToUSC, uscToLevelData, version } from '@next-sekai/sonolus-next-sekai-engine'
-import { compress } from '@sonolus/core'
 import { mkdir, writeFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
+
+import { susToUSC, uscToLevelData, version } from '@next-sekai/sonolus-next-sekai-engine'
+import { compress } from '@sonolus/core'
+
 import { fetchMusicChart } from '../../clients/asset/music.js'
 import { MasterDifficulty } from '../../clients/master/difficulty.js'
 import { Server } from '../../clients/master/server.js'
@@ -20,9 +22,7 @@ export const installLevelData = () => {
         }
 
         const path = resolve(cachePath, item.name)
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         res.sendFile(path, async (error) => {
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             if (!error) return
 
             try {

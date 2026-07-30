@@ -1,11 +1,11 @@
 import { PlaylistItemModel } from '@sonolus/express'
+
 import { config } from '../../config.js'
 import { Repository } from '../../repository/index.js'
 import { levels } from '../level/item.js'
 import { Group } from '../utils/group.js'
 
 export const playlists: Group<PlaylistItemModel[]> = [[], []]
-// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 export const playlistsMap: Group<Map<string, PlaylistItemModel>> = [new Map(), new Map()]
 
 export const updatePlaylistItems = (repository: Repository) => {

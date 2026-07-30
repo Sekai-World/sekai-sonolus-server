@@ -1,4 +1,5 @@
 import { packPath } from '@sonolus/free-pack'
+
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
 

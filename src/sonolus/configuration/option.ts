@@ -1,4 +1,5 @@
 import { ServerOptionsModel } from '@sonolus/express'
+
 import { Repository } from '../../repository/index.js'
 
 export const configurationOptions = {

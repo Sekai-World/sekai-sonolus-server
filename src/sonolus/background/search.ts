@@ -1,5 +1,6 @@
 import { Text } from '@sonolus/core'
 import { ServerFormsModel, ServerMultiOptionValueModel } from '@sonolus/express'
+
 import { CharacterId } from '../../repository/character.js'
 import { Repository } from '../../repository/index.js'
 import { toMultiValues } from '../utils/form.js'
@@ -28,21 +29,18 @@ export const backgroundSearches = {
                 name: {},
                 required: false,
                 type: 'multi',
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
                 values: {} as Record<CharacterId, ServerMultiOptionValueModel>,
             },
             rarities: {
                 name: {},
                 required: false,
                 type: 'multi',
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
                 values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             attributes: {
                 name: {},
                 required: false,
                 type: 'multi',
-                // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
                 values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             images: {

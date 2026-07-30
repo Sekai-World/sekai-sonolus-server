@@ -1,4 +1,5 @@
 import { Text } from '@sonolus/core'
+
 import { mapValues } from '../../utils/object.js'
 
 export const difficulties = mapValues(

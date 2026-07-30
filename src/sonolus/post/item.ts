@@ -1,4 +1,5 @@
 import { Text } from '@sonolus/core'
+
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
 import { resolveEngineResource } from '../utils/engine.js'
