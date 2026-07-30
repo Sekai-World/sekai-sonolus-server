@@ -11,11 +11,10 @@ jobs:
             contents: write
 
         steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v3
+            - uses: actions/checkout@v7
+            - uses: actions/setup-node@v6
               with:
-                  node-version: 'lts/*'
-                  cache: 'npm'
+                  node-version: '22'
             - run: npm ci
             - run: npm run build
             - run: tar czvf sekai-sonolus-server.tar.gz dist package.json package-lock.json config.example.json LICENSE.txt README.md

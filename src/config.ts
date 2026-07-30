@@ -1,6 +1,8 @@
-import { Type } from '@sinclair/typebox'
-import { Value } from '@sinclair/typebox/value'
 import { readFileSync } from 'node:fs'
+
+import Type from 'typebox'
+import Value from 'typebox/value'
+
 import { clientConfigSchema } from './clients/config.js'
 import { serverSchema } from './clients/master/server.js'
 

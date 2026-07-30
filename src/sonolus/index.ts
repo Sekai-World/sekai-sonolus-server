@@ -1,4 +1,5 @@
 import { Sonolus } from '@sonolus/express'
+
 import { config } from '../config.js'
 import { Repository } from '../repository/index.js'
 import { installBackground, updateBackground } from './background/index.js'

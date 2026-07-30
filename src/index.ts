@@ -1,5 +1,6 @@
 import { SonolusRedirectShare, SonolusSpaShare } from '@sonolus/express'
 import express from 'express'
+
 import { config } from './config.js'
 import { fetchRepository } from './repository/index.js'
 import { sonolus, updateSonolus } from './sonolus/index.js'
@@ -16,7 +17,6 @@ if (config.sonolusShare.mode === 'spa') {
     app.use(config.sonolus.basePath, new SonolusRedirectShare(config.sonolusShare.root).router)
 }
 
-// eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.listen(config.port, async () => {
     console.log('Server listening at port', config.port)
 

@@ -19,7 +19,6 @@ export const merge = <T extends object, PK extends keyof T, K extends keyof T>(
         for (const item of items) {
             const id = item[primaryKey] as T[PK] & PropertyKey
 
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
             result[id] ??= {
                 ...item,
                 ...fromEntries(keys.map((key) => [key, {}])),
