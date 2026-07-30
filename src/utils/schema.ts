@@ -1,6 +1,6 @@
-import { TLiteral, TLiteralValue, TUnion, Type } from '@sinclair/typebox'
+import Type from 'typebox'
 
-export const toArrayEnumSchema = <T extends readonly TLiteralValue[]>(values: T) =>
-    Type.Union(values.map((value) => Type.Literal(value))) as TUnion<{
-        -readonly [K in keyof T]: TLiteral<T[K]>
+export const toArrayEnumSchema = <T extends readonly Type.TLiteralValue[]>(values: T) =>
+    Type.Union(values.map((value) => Type.Literal(value))) as Type.TUnion<{
+        -readonly [K in keyof T]: Type.TLiteral<T[K]>
     }>
