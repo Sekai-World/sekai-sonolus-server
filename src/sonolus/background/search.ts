@@ -4,6 +4,7 @@ import { ServerFormsModel, ServerMultiOptionValueModel } from '@sonolus/express'
 import { CharacterId } from '../../repository/character.js'
 import { Repository } from '../../repository/index.js'
 import { toMultiValues } from '../utils/form.js'
+import { toLocalized } from '../utils/i18n.js'
 
 export const backgroundSearches = {
     card: {
@@ -74,16 +75,26 @@ export const backgroundSearches = {
 export const updateBackgroundSearches = (repository: Repository) => {
     backgroundSearches.card.title = repository.commonTexts.card
 
-    backgroundSearches.card.options.characters.name = repository.commonTexts.character
+    backgroundSearches.card.options.characters.name = {
+        en: toLocalized(repository.commonTexts.character),
+    }
     backgroundSearches.card.options.characters.values = toMultiValues(repository.characters)
 
-    backgroundSearches.card.options.rarities.name = repository.commonTexts.rarity
+    backgroundSearches.card.options.rarities.name = {
+        en: toLocalized(repository.commonTexts.rarity),
+    }
     backgroundSearches.card.options.rarities.values = toMultiValues(repository.cardRarities)
 
-    backgroundSearches.card.options.attributes.name = repository.commonTexts.attribute
+    backgroundSearches.card.options.attributes.name = {
+        en: toLocalized(repository.commonTexts.attribute),
+    }
     backgroundSearches.card.options.attributes.values = toMultiValues(repository.attributes)
 
-    backgroundSearches.card.options.images.name = repository.commonTexts.card
-    backgroundSearches.card.options.images.values.normal.title = repository.cardTexts.normal
-    backgroundSearches.card.options.images.values.trained.title = repository.cardTexts.trained
+    backgroundSearches.card.options.images.name = { en: toLocalized(repository.commonTexts.card) }
+    backgroundSearches.card.options.images.values.normal.title = {
+        en: toLocalized(repository.cardTexts.normal),
+    }
+    backgroundSearches.card.options.images.values.trained.title = {
+        en: toLocalized(repository.cardTexts.trained),
+    }
 }
