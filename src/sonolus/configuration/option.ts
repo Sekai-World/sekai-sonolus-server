@@ -1,6 +1,7 @@
 import { ServerOptionsModel } from '@sonolus/express'
 
 import { Repository } from '../../repository/index.js'
+import { toLocalized } from '../utils/i18n.js'
 
 export const configurationOptions = {
     spoilers: {
@@ -15,7 +16,11 @@ export const configurationOptions = {
 } satisfies ServerOptionsModel
 
 export const updateConfigurationOptions = (repository: Repository) => {
-    configurationOptions.spoilers.name = repository.commonTexts.spoilerContent
-    configurationOptions.spoilers.values.music.title = repository.commonTexts.music
-    configurationOptions.spoilers.values.card.title = repository.commonTexts.card
+    configurationOptions.spoilers.name = { en: toLocalized(repository.commonTexts.spoilerContent) }
+    configurationOptions.spoilers.values.music.title = {
+        en: toLocalized(repository.commonTexts.music),
+    }
+    configurationOptions.spoilers.values.card.title = {
+        en: toLocalized(repository.commonTexts.card),
+    }
 }

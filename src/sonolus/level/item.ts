@@ -12,7 +12,7 @@ import { Repository } from '../../repository/index.js'
 import { asset } from '../../utils/asset.js'
 import { notUndefined } from '../../utils/object.js'
 import { Group } from '../utils/group.js'
-import { format, join } from '../utils/i18n.js'
+import { join, toLocalized } from '../utils/i18n.js'
 import { sekaiText } from '../utils/sekai.js'
 import { getLevelDataUrl } from './data.js'
 
@@ -36,16 +36,15 @@ export const updateLevelItems = (repository: Repository) => {
             ({ musicId }) => musicId === music.id,
         )
 
-        const description = format(
-            [
-                '#LYRICIST:#SEPARATOR_COLON:{0}',
-                '#COMPOSER:#SEPARATOR_COLON:{1}',
-                '#ARRANGER:#SEPARATOR_COLON:{2}',
+        const description = {
+            en: [
+                `#LYRICIST:#SEPARATOR_COLON:${toLocalized(music.lyricist)}`,
+                `#COMPOSER:#SEPARATOR_COLON:${toLocalized(music.composer)}`,
+                `#ARRANGER:#SEPARATOR_COLON:${toLocalized(music.arranger)}`,
                 '',
                 `##:${music.keywords}`,
             ].join('\n'),
-            [music.lyricist, music.composer, music.arranger],
-        )
+        }
 
         const cover = asset(music.server, getMusicCoverPath(music.assetbundleName))
 
