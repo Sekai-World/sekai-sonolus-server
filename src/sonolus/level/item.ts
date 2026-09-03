@@ -12,7 +12,7 @@ import { Repository } from '../../repository/index.js'
 import { asset } from '../../utils/asset.js'
 import { notUndefined } from '../../utils/object.js'
 import { Group } from '../utils/group.js'
-import { join, toLocalized } from '../utils/i18n.js'
+import { join, toLocalizationText, toLocalized } from '../utils/i18n.js'
 import { sekaiText } from '../utils/sekai.js'
 import { getLevelDataUrl } from './data.js'
 
@@ -49,8 +49,10 @@ export const updateLevelItems = (repository: Repository) => {
         const cover = asset(music.server, getMusicCoverPath(music.assetbundleName))
 
         for (const musicVocal of musicVocals) {
-            const musicVocalTypeTitle = repository.musicVocalTypes[musicVocal.musicVocalType]
-                ?.title ?? { en: musicVocal.musicVocalType }
+            const musicVocalTypeTitle = toLocalizationText(
+                repository.musicVocalTypes[musicVocal.musicVocalType]?.title,
+                musicVocal.musicVocalType,
+            )
 
             const bgm = asset(musicVocal.server, getMusicBgmPath(musicVocal.assetbundleName))
             if (!repository.whitelist.has(bgm.url)) continue
@@ -73,12 +75,16 @@ export const updateLevelItems = (repository: Repository) => {
                 name,
                 version: 1,
                 rating: musicDifficulty.playLevel,
-                title: music.title,
+                title: { en: toLocalized(music.title) },
                 artists: characters.length
-                    ? join(
-                          ' & ',
-                          characters.map((character) => character.title),
-                      )
+                    ? {
+                          en: toLocalized(
+                              join(
+                                  ' & ',
+                                  characters.map((character) => character.title),
+                              ),
+                          ),
+                      }
                     : musicVocalTypeTitle,
                 author: sekaiText,
                 tags: [

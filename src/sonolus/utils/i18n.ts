@@ -5,6 +5,9 @@ import { config } from '../../config.js'
 
 export const toLocalized = (text: LocalizationText) => `##LOCALIZE:${JSON.stringify(text)}`
 
+export const toLocalizationText = (text: LocalizationText | undefined, fallback: string) =>
+    text ? { en: toLocalized(text) } : { en: fallback }
+
 export const join = (separator: string, values: LocalizationText[]) =>
     Object.fromEntries(
         Object.keys(locales).map((locale) => [

@@ -13,6 +13,7 @@ import { Repository } from '../../repository/index.js'
 import { asset } from '../../utils/asset.js'
 import { sonolus } from '../index.js'
 import { Group } from '../utils/group.js'
+import { toLocalizationText, toLocalized } from '../utils/i18n.js'
 import { HasMeta } from '../utils/meta.js'
 import { sekaiText } from '../utils/sekai.js'
 
@@ -45,12 +46,15 @@ export const updateBackgroundItems = (repository: Repository) => {
         const cardRarity = repository.cardRarities[card.cardRarityType]
         if (!cardRarity) continue
 
-        const title = card.prefix
-        const subtitle = repository.characters[characterId]?.title ?? { en: `${card.characterId}` }
+        const title = { en: toLocalized(card.prefix) }
+        const subtitle = toLocalizationText(
+            repository.characters[characterId]?.title,
+            `${card.characterId}`,
+        )
         const author = sekaiText
         const tags: DatabaseTag[] = [
             { title: cardRarity.title, icon: 'star' },
-            { title: repository.attributes[card.attr]?.title ?? { en: card.attr } },
+            { title: toLocalizationText(repository.attributes[card.attr]?.title, card.attr) },
         ]
         const meta = {
             characterId,
@@ -67,7 +71,7 @@ export const updateBackgroundItems = (repository: Repository) => {
                 title,
                 subtitle,
                 author,
-                tags: [...tags, { title: repository.cardTexts.trained }],
+                tags: [...tags, { title: { en: toLocalized(repository.cardTexts.trained) } }],
                 thumbnail: asset(card.server, getCardThumbnailPath(card.assetbundleName, true)),
                 data: backgroundData,
                 image: asset(card.server, getCardImagePath(card.assetbundleName, true)),
@@ -82,7 +86,7 @@ export const updateBackgroundItems = (repository: Repository) => {
             title,
             subtitle,
             author,
-            tags: [...tags, { title: repository.cardTexts.normal }],
+            tags: [...tags, { title: { en: toLocalized(repository.cardTexts.normal) } }],
             thumbnail: asset(card.server, getCardThumbnailPath(card.assetbundleName, false)),
             data: backgroundData,
             image: asset(card.server, getCardImagePath(card.assetbundleName, false)),
