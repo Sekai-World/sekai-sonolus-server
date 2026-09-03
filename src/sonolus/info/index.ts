@@ -1,12 +1,13 @@
 import { config } from '../../config.js'
 import { sonolus } from '../index.js'
+import { toLocalized } from '../utils/i18n.js'
 import { sekaiText } from '../utils/sekai.js'
 
 export const installInfo = () => {
     if (config.sonolus.bannerPath) sonolus.banner = sonolus.add(config.sonolus.bannerPath)
 
     sonolus.serverInfoHandler = () => ({
-        title: sekaiText,
+        title: { en: toLocalized(sekaiText) },
         description: config.sonolus.description,
         buttons: [
             { type: 'post' },
