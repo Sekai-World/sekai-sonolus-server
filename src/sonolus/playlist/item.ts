@@ -4,7 +4,6 @@ import { config } from '../../config.js'
 import { Repository } from '../../repository/index.js'
 import { levels } from '../level/item.js'
 import { Group } from '../utils/group.js'
-import { toLocalizationText } from '../utils/i18n.js'
 
 export const playlists: Group<PlaylistItemModel[]> = [[], []]
 export const playlistsMap: Group<Map<string, PlaylistItemModel>> = [new Map(), new Map()]
@@ -15,10 +14,9 @@ export const updatePlaylistItems = (repository: Repository) => {
     for (const level of levels[1]) {
         const name = `${config.sonolus.prefix}-${level.meta.musicId}`
 
-        const musicVocalTypeTitle = toLocalizationText(
-            repository.musicVocalTypes[level.meta.musicVocalType]?.title,
-            level.meta.musicVocalType,
-        )
+        const musicVocalTypeTitle =
+            repository.musicVocalTypes[level.meta.musicVocalType]?.title ??
+            level.meta.musicVocalType
 
         const playlist = playlistsMap[1].get(name)
         if (playlist) {

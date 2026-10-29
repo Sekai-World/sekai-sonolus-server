@@ -4,37 +4,37 @@ import { ServerFormsModel, ServerMultiOptionValueModel } from '@sonolus/express'
 import { CharacterId } from '../../repository/character.js'
 import { Repository } from '../../repository/index.js'
 import { levels } from '../level/item.js'
-import { toMultiValues } from '../utils/form.js'
+import { toLocalizedMultiValues, toMultiValues } from '../utils/form.js'
 
 export const playlistSearches = {
     advanced: {
-        title: { en: Text.Advanced },
+        title: Text.Advanced,
         icon: Icon.Advanced,
         requireConfirmation: false,
         options: {
             keywords: {
-                name: { en: Text.Keywords },
+                name: Text.Keywords,
                 required: false,
                 type: 'text',
-                placeholder: { en: Text.KeywordsPlaceholder },
+                placeholder: Text.KeywordsPlaceholder,
                 def: '',
                 limit: 0,
                 shortcuts: [],
             },
             random: {
-                name: { en: Text.Random },
+                name: Text.Random,
                 required: false,
                 type: 'toggle',
                 def: false,
             },
             artists: {
-                name: { en: Text.Artists },
+                name: Text.Artists,
                 required: false,
                 type: 'multi',
                 values: {} as Record<CharacterId, ServerMultiOptionValueModel>,
             },
             categories: {
-                name: { en: Text.Category },
+                name: Text.Category,
                 required: false,
                 type: 'multi',
                 values: {} as Record<string, ServerMultiOptionValueModel>,
@@ -42,12 +42,12 @@ export const playlistSearches = {
         },
     },
     random: {
-        title: { en: Text.Random },
+        title: Text.Random,
         icon: Icon.Shuffle,
         requireConfirmation: false,
         options: {
             minRating: {
-                name: { en: Text.RatingMinimum },
+                name: Text.RatingMinimum,
                 required: false,
                 type: 'slider',
                 def: 0,
@@ -56,7 +56,7 @@ export const playlistSearches = {
                 step: 1,
             },
             maxRating: {
-                name: { en: Text.RatingMaximum },
+                name: Text.RatingMaximum,
                 required: false,
                 type: 'slider',
                 def: 0,
@@ -69,7 +69,7 @@ export const playlistSearches = {
 } satisfies ServerFormsModel
 
 export const updatePlaylistSearches = (repository: Repository) => {
-    playlistSearches.advanced.options.artists.values = toMultiValues(repository.characters)
+    playlistSearches.advanced.options.artists.values = toLocalizedMultiValues(repository.characters)
 
     playlistSearches.advanced.options.categories.values = toMultiValues(repository.musicVocalTypes)
 

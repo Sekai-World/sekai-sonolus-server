@@ -15,13 +15,13 @@ export const installLevelInfo = () => {
         searches: levelSearches,
         sections: [
             {
-                title: { en: Text.Random },
+                title: Text.Random,
                 icon: Icon.Shuffle,
                 itemType: 'level',
                 items: randomize(randomLevels[spoilers.music ? 1 : 0], 5),
             },
             {
-                title: { en: Text.Newest },
+                title: Text.Newest,
                 itemType: 'level',
                 items: newestLevels[spoilers.music ? 1 : 0],
             },

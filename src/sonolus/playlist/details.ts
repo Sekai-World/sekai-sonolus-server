@@ -20,10 +20,10 @@ export const installPlaylistDetails = () => {
                 item: {
                     name: itemName,
                     version: 1,
-                    title: { en: `${minRating} - ${maxRating}` },
+                    title: `${minRating} - ${maxRating}`,
                     subtitle: {},
                     author: sekaiText,
-                    tags: [{ title: { en: Text.Random } }],
+                    tags: [{ title: Text.Random }],
                     levels: randomize(
                         levels[spoilers.music ? 1 : 0].filter(
                             ({ rating }) => rating >= minRating && rating <= maxRating,
@@ -58,7 +58,7 @@ export const installPlaylistDetails = () => {
 }
 
 const getRandom = (spoiler: boolean, item: PlaylistItemModel) => ({
-    title: { en: Text.Random },
+    title: Text.Random,
     icon: Icon.Shuffle,
     itemType: 'playlist' as const,
     items: randomize(

@@ -6,6 +6,6 @@ import { merge } from './utils/merge.js'
 export const getCardRarities = (data: RepositoryData) =>
     mapValues(merge(data.cardRarities, 'cardRarityType', []), (rarity, cardRarity) => ({
         ...cardRarity,
-        title: { en: rarity.startsWith('rarity_') ? capitalize(rarity.substring(7)) : rarity },
+        title: rarity.startsWith('rarity_') ? capitalize(rarity.substring(7)) : rarity,
         hasTraining: !!cardRarity.trainingMaxLevel,
     }))

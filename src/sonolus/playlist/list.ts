@@ -26,10 +26,10 @@ export const installPlaylistList = () => {
                     {
                         name: `${config.sonolus.prefix}-random-${options.minRating}-${options.maxRating}`,
                         version: 1,
-                        title: { en: `${options.minRating} - ${options.maxRating}` },
+                        title: `${options.minRating} - ${options.maxRating}`,
                         subtitle: {},
                         author: sekaiText,
-                        tags: [{ title: { en: Text.Random } }],
+                        tags: [{ title: Text.Random }],
                         levels: [],
                         meta: {
                             musicVocalTypes: new Set(),

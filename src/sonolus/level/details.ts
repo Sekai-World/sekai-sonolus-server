@@ -49,7 +49,7 @@ export const installLevelDetails = () => {
 }
 
 const getOtherDifficulties = (spoiler: boolean, item: LevelItemModel) => ({
-    title: { en: Text.OtherDifficulties },
+    title: Text.OtherDifficulties,
     itemType: 'level' as const,
     items:
         indexes[spoiler ? 1 : 0].otherDifficulties
@@ -58,7 +58,7 @@ const getOtherDifficulties = (spoiler: boolean, item: LevelItemModel) => ({
 })
 
 const getOtherVersions = (spoiler: boolean, item: LevelItemModel) => ({
-    title: { en: Text.OtherVersions },
+    title: Text.OtherVersions,
     itemType: 'level' as const,
     items:
         indexes[spoiler ? 1 : 0].otherVersions
@@ -67,7 +67,7 @@ const getOtherVersions = (spoiler: boolean, item: LevelItemModel) => ({
 })
 
 const getSameArtists = (spoiler: boolean, item: LevelItemModel) => ({
-    title: { en: Text.SameArtists },
+    title: Text.SameArtists,
     itemType: 'level' as const,
     items: randomize(
         indexes[spoiler ? 1 : 0].sameArtists
@@ -78,7 +78,7 @@ const getSameArtists = (spoiler: boolean, item: LevelItemModel) => ({
 })
 
 const getRandom = (spoiler: boolean, item: LevelItemModel) => ({
-    title: { en: Text.Random },
+    title: Text.Random,
     icon: Icon.Shuffle,
     itemType: 'level' as const,
     items: randomize(
