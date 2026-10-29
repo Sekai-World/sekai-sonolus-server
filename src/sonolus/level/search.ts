@@ -4,50 +4,50 @@ import { ServerFormsModel, ServerMultiOptionValueModel } from '@sonolus/express'
 import { difficulties } from '../../clients/master/difficulty.js'
 import { CharacterId } from '../../repository/character.js'
 import { Repository } from '../../repository/index.js'
-import { toMultiValues } from '../utils/form.js'
+import { toLocalizedMultiValues, toMultiValues } from '../utils/form.js'
 import { levels } from './item.js'
 
 export const levelSearches = {
     advanced: {
-        title: { en: Text.Advanced },
+        title: Text.Advanced,
         icon: Icon.Advanced,
         requireConfirmation: false,
         options: {
             keywords: {
-                name: { en: Text.Keywords },
+                name: Text.Keywords,
                 required: false,
                 type: 'text',
-                placeholder: { en: Text.KeywordsPlaceholder },
+                placeholder: Text.KeywordsPlaceholder,
                 def: '',
                 limit: 0,
                 shortcuts: [],
             },
             random: {
-                name: { en: Text.Random },
+                name: Text.Random,
                 required: false,
                 type: 'toggle',
                 def: false,
             },
             artists: {
-                name: { en: Text.Artists },
+                name: Text.Artists,
                 required: false,
                 type: 'multi',
                 values: {} as Record<CharacterId, ServerMultiOptionValueModel>,
             },
             categories: {
-                name: { en: Text.Category },
+                name: Text.Category,
                 required: false,
                 type: 'multi',
                 values: {} as Record<string, ServerMultiOptionValueModel>,
             },
             difficulties: {
-                name: { en: Text.Difficulty },
+                name: Text.Difficulty,
                 required: false,
                 type: 'multi',
                 values: toMultiValues(difficulties),
             },
             minRating: {
-                name: { en: Text.RatingMinimum },
+                name: Text.RatingMinimum,
                 required: false,
                 type: 'slider',
                 def: 0,
@@ -56,7 +56,7 @@ export const levelSearches = {
                 step: 1,
             },
             maxRating: {
-                name: { en: Text.RatingMaximum },
+                name: Text.RatingMaximum,
                 required: false,
                 type: 'slider',
                 def: 0,
@@ -69,7 +69,7 @@ export const levelSearches = {
 } satisfies ServerFormsModel
 
 export const updateLevelSearches = (repository: Repository) => {
-    levelSearches.advanced.options.artists.values = toMultiValues(repository.characters)
+    levelSearches.advanced.options.artists.values = toLocalizedMultiValues(repository.characters)
 
     levelSearches.advanced.options.categories.values = toMultiValues(repository.musicVocalTypes)
 

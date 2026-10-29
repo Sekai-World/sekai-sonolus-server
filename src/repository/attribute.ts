@@ -15,7 +15,7 @@ export const getAttributes = (data: RepositoryData) =>
             .map((attr) => [
                 attr,
                 {
-                    title: { en: capitalize(attr) },
+                    title: capitalize(attr),
                 },
             ]),
     )

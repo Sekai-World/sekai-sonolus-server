@@ -14,13 +14,13 @@ export const installPlaylistInfo = () => {
         searches: playlistSearches,
         sections: [
             {
-                title: { en: Text.Random },
+                title: Text.Random,
                 icon: Icon.Shuffle,
                 itemType: 'playlist',
                 items: randomize(playlists[spoilers.music ? 1 : 0], 5),
             },
             {
-                title: { en: Text.Newest },
+                title: Text.Newest,
                 itemType: 'playlist',
                 items: newestPlaylists[spoilers.music ? 1 : 0],
             },

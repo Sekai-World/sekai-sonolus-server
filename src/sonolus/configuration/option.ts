@@ -16,11 +16,7 @@ export const configurationOptions = {
 } satisfies ServerOptionsModel
 
 export const updateConfigurationOptions = (repository: Repository) => {
-    configurationOptions.spoilers.name = { en: toLocalized(repository.commonTexts.spoilerContent) }
-    configurationOptions.spoilers.values.music.title = {
-        en: toLocalized(repository.commonTexts.music),
-    }
-    configurationOptions.spoilers.values.card.title = {
-        en: toLocalized(repository.commonTexts.card),
-    }
+    configurationOptions.spoilers.name = toLocalized(repository.commonTexts.spoilerContent)
+    configurationOptions.spoilers.values.music.title = toLocalized(repository.commonTexts.music)
+    configurationOptions.spoilers.values.card.title = toLocalized(repository.commonTexts.card)
 }

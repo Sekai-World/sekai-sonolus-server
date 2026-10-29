@@ -50,7 +50,7 @@ export const installBackgroundDetails = () => {
             leaderboards: [],
             sections: [
                 {
-                    title: { en: Text.Random },
+                    title: Text.Random,
                     icon: Icon.Shuffle,
                     itemType: 'background',
                     items: randomize(
@@ -64,7 +64,7 @@ export const installBackgroundDetails = () => {
 }
 
 const getOtherVersions = (spoiler: boolean, item: HasMeta<BackgroundItemModel>) => ({
-    title: { en: Text.OtherVersions },
+    title: Text.OtherVersions,
     itemType: 'background' as const,
     items:
         indexes[spoiler ? 1 : 0].otherVersions
@@ -84,7 +84,7 @@ const getSameCharacter = (spoiler: boolean, item: HasMeta<BackgroundItemModel>) 
 })
 
 const getRandom = (spoiler: boolean, item: HasMeta<BackgroundItemModel>) => ({
-    title: { en: Text.Random },
+    title: Text.Random,
     icon: Icon.Shuffle,
     itemType: 'background' as const,
     items: randomize(

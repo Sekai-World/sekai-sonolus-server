@@ -15,18 +15,18 @@ export const installBackgroundInfo = () => {
         searches: backgroundSearches,
         sections: [
             {
-                title: { en: Text.Random },
+                title: Text.Random,
                 icon: Icon.Shuffle,
                 itemType: 'background',
                 items: randomize(cardBackgrounds[spoilers.card ? 1 : 0], 5),
             },
             {
-                title: { en: Text.Newest },
+                title: Text.Newest,
                 itemType: 'background',
                 items: newestBackgrounds[spoilers.card ? 1 : 0],
             },
             {
-                title: { en: Text.Others },
+                title: Text.Others,
                 itemType: 'background',
                 items: otherBackgrounds,
             },

@@ -1,12 +1,16 @@
-import { LocalizationText } from '@sonolus/core'
-
 import { mapValues } from '../../utils/object.js'
 import { toLocalized } from './i18n.js'
 
-export const toMultiValues = <T extends Record<PropertyKey, { title: LocalizationText }>>(
-    object: T,
+export const toMultiValues = (object: Record<PropertyKey, { title: string }>) =>
+    mapValues(object, (_, { title }) => ({
+        title,
+        def: true,
+    }))
+
+export const toLocalizedMultiValues = (
+    object: Record<PropertyKey, { title: Record<string, string> }>,
 ) =>
     mapValues(object, (_, { title }) => ({
-        title: { en: toLocalized(title) },
+        title: toLocalized(title),
         def: true,
     }))
